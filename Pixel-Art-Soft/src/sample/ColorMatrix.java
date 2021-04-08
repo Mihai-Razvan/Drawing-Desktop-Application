@@ -12,7 +12,7 @@ public class ColorMatrix {
         matrix = new Color[16][16];
         for(int i = 0; i < 16; i++)
             for(int j = 0; j < 16; j++)
-                matrix[i][j] = Color.RED;
+                matrix[i][j] = Color.WHITE;
 
        pixelArray = new double[256];
     }

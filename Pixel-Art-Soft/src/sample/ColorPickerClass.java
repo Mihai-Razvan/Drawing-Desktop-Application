@@ -1,6 +1,7 @@
 package sample;
 
 import javafx.scene.control.ColorPicker;
+import javafx.scene.paint.Color;
 
 public class ColorPickerClass {
 
@@ -8,7 +9,7 @@ public class ColorPickerClass {
 
     ColorPickerClass()
     {
-        colorPicker = new ColorPicker();
+        colorPicker = new ColorPicker(Color.BLACK);
         colorPicker.getStyleClass().add("button");
         colorPicker.setStyle("-fx-color-label-visible: false");
         colorPicker.setScaleX(1.9);

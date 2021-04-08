@@ -4,15 +4,10 @@ import javafx.event.EventHandler;
 import javafx.scene.image.Image;
 import javafx.scene.image.PixelWriter;
 import javafx.scene.image.WritableImage;
-import javafx.scene.input.DragEvent;
 import javafx.scene.input.MouseDragEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
-
-import java.net.ResponseCache;
-import java.net.Socket;
-import java.util.EventListener;
 
 public class Canvas {
 
@@ -23,11 +18,13 @@ public class Canvas {
     double drawingWidth;
     double drawingHeight;
     double squareSize = 30;
+    WritableImage writableImage;
 
     Canvas(double paneWidth, double paneHeight)
     {
         rectanglesMatrix = new Rectangle[16][16];
         colorMatrix = new ColorMatrix();
+        writableImage = new WritableImage(128, 128);
 
         drawingHeight = 16 * squareSize;
         drawingWidth = 16 * squareSize;
@@ -36,6 +33,7 @@ public class Canvas {
         for(int i = 0; i < 16; i++)
             for(int j = 0; j < 16; j++)
                 instantiateRectangle(i, j);
+
     }
 
     private void instantiateRectangle(int i, int j)
@@ -44,7 +42,7 @@ public class Canvas {
                 (paneCenterY - drawingHeight / 2) + j * squareSize, squareSize, squareSize);
         rectanglesMatrix[i][j].setStroke(Color.BLACK);
         final Rectangle rectangle = rectanglesMatrix[i][j];
-        rectangle.setFill(Color.RED);
+        rectangle.setFill(Color.WHITE);
         rectangleColorChanger(i, j, rectangle);
     }
 
@@ -59,10 +57,12 @@ public class Canvas {
 
             @Override
             public void handle(MouseEvent event) {
-                rectangle.setFill(GUI.getLeftPaneClass().getColorPickerClass().getColorPicker().getValue());
-                colorMatrix.setMatrixElement(i, j, GUI.getLeftPaneClass().getColorPickerClass().getColorPicker().getValue());
-
-                composeImage();
+                if(GUI.getLeftPane().getSelectedTool() == "Pen")
+                {
+                    rectangle.setFill(GUI.getLeftPane().getColorPickerClass().getColorPicker().getValue());
+                    colorMatrix.setMatrixElement(i, j, GUI.getLeftPane().getColorPickerClass().getColorPicker().getValue());
+                    composeImage();
+                }
             }
         });
 
@@ -76,10 +76,28 @@ public class Canvas {
         rectangle.setOnMouseDragOver(new EventHandler<MouseDragEvent>() {
             @Override
             public void handle(MouseDragEvent mouseDragEvent) {
-                rectangle.setFill(GUI.getLeftPaneClass().getColorPickerClass().getColorPicker().getValue());
-                colorMatrix.setMatrixElement(i, j, GUI.getLeftPaneClass().getColorPickerClass().getColorPicker().getValue());
+                if(GUI.getLeftPane().getSelectedTool() == "Pen")
+                {
+                    rectangle.setFill(GUI.getLeftPane().getColorPickerClass().getColorPicker().getValue());
+                    colorMatrix.setMatrixElement(i, j, GUI.getLeftPane().getColorPickerClass().getColorPicker().getValue());
+                }
 
                 composeImage();
+            }
+        });
+
+        rectangle.setOnMouseEntered(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent mouseEvent) {
+                if(GUI.getLeftPane().getSelectedTool() == "Pen")
+                    rectangle.setFill(GUI.getLeftPane().getColorPickerClass().getColorPicker().getValue());
+            }
+        });
+
+        rectangle.setOnMouseExited(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent mouseEvent) {
+                rectangle.setFill(colorMatrix.getMatrixElement(i, j));
             }
         });
 
@@ -87,8 +105,7 @@ public class Canvas {
 
     public void composeImage()
     {
-        WritableImage image = new WritableImage(256,256);
-        PixelWriter pixelWriter = image.getPixelWriter();
+        PixelWriter pixelWriter = this.writableImage.getPixelWriter();
 
         for(int i = 0; i < 16; i ++)
             for(int j = 0; j < 16; j ++)
@@ -98,6 +115,12 @@ public class Canvas {
                         pixelWriter.setColor(i * 8+ k, j * 8 + t, colorMatrix.getMatrixElement(i, j));
             }
 
-        GUI.getBottomPaneClass().addImageToPane(image);
+        GUI.getBottomPane().addImageToPane(getImage());
+    }
+
+    public Image getImage()
+    {
+        Image image = writableImage;
+        return image;
     }
 }

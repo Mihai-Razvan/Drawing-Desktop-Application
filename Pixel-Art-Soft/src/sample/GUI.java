@@ -1,12 +1,8 @@
 package sample;
 
 import javafx.application.Application;
-import javafx.event.EventHandler;
-import javafx.geometry.Pos;
 import javafx.scene.Scene;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.text.Text;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 
@@ -16,16 +12,18 @@ public class GUI extends Application {
     private static double Screen_Resolution_Width;
     private static BorderPane borderPane;
     private static Scene scene;
-    private static CenterPaneClass centerPaneClass;
-    private static TopPaneClass topPaneClass;
-    private static RightPaneClass rightPaneClass;
-    private static BottomPaneClass bottomPaneClass;
-    private static LeftPaneClass leftPaneClass;
+    private static CenterPane centerPane;
+    private static TopPane topPane;
+    private static RightPane rightPane;
+    private static BottomPane bottomPane;
+    private static LeftPane leftPane;
+    private static Stage stage;
 
 
     @Override
     public void start(Stage stage) throws Exception{
 
+        this.stage = stage;
         Screen_Resolution_Height = Screen.getPrimary().getVisualBounds().getHeight();
         Screen_Resolution_Width = Screen.getPrimary().getVisualBounds().getWidth();
 
@@ -43,13 +41,15 @@ public class GUI extends Application {
 
     private void createScene()
     {
-        centerPaneClass = new CenterPaneClass();
-        topPaneClass = new TopPaneClass();
-        rightPaneClass = new RightPaneClass();
-        bottomPaneClass = new BottomPaneClass();
-        leftPaneClass = new LeftPaneClass();
+        centerPane = new CenterPane();
+        topPane = new TopPane();
+        rightPane = new RightPane();
+        bottomPane = new BottomPane();
+        leftPane = new LeftPane();
 
-        borderPane = new BorderPane(centerPaneClass.getPane(), topPaneClass.getPane(), rightPaneClass.getPane(), bottomPaneClass.getPane(), leftPaneClass.getPane());
+        centerPane.getCanvas().composeImage();
+
+        borderPane = new BorderPane(centerPane.getPane(), topPane.getPane(), rightPane.getPane(), bottomPane.getPane(), leftPane.getPane());
         scene = new Scene(borderPane, Screen_Resolution_Width, Screen_Resolution_Height);
     }
 
@@ -65,24 +65,28 @@ public class GUI extends Application {
         return Screen_Resolution_Width;
     }
 
-    public static CenterPaneClass getCenterPaneClass() {
-        return centerPaneClass;
+    public static CenterPane getCenterPane() {
+        return centerPane;
     }
 
-    public static TopPaneClass getTopPaneClass() {
-        return topPaneClass;
+    public static TopPane getTopPane() {
+        return topPane;
     }
 
-    public static RightPaneClass getRightPaneClass() {
-        return rightPaneClass;
+    public static RightPane getRightPane() {
+        return rightPane;
     }
 
-    public static BottomPaneClass getBottomPaneClass() {
-        return bottomPaneClass;
+    public static BottomPane getBottomPane() {
+        return bottomPane;
     }
 
-    public static LeftPaneClass getLeftPaneClass() {
-        return leftPaneClass;
+    public static LeftPane getLeftPane() {
+        return leftPane;
+    }
+
+    public static Stage getStage(){
+        return stage;
     }
 
 }
