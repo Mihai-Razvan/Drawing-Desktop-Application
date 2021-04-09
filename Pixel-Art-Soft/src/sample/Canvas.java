@@ -7,12 +7,14 @@ import javafx.scene.image.WritableImage;
 import javafx.scene.input.MouseDragEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
+import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Rectangle;
 
 public class Canvas {
 
     Rectangle[][] rectanglesMatrix;
     ColorMatrix colorMatrix;
+    Image noFillImage;
     double paneCenterX;
     double paneCenterY;
     double drawingWidth;
@@ -30,6 +32,8 @@ public class Canvas {
         drawingWidth = 16 * squareSize;
         paneCenterX = paneWidth / 2;
         paneCenterY = paneHeight / 2;
+
+        noFillImage = new Image("no_fill.png");
         for(int i = 0; i < 16; i++)
             for(int j = 0; j < 16; j++)
                 instantiateRectangle(i, j);
@@ -42,13 +46,14 @@ public class Canvas {
                 (paneCenterY - drawingHeight / 2) + j * squareSize, squareSize, squareSize);
         rectanglesMatrix[i][j].setStroke(Color.BLACK);
         final Rectangle rectangle = rectanglesMatrix[i][j];
-        rectangle.setFill(Color.WHITE);
+        rectangle.setFill(new ImagePattern(noFillImage));
         rectangleColorChanger(i, j, rectangle);
     }
 
-    public Rectangle getRectangle(int i, int j)
+
+    public void setRectangleColor(int i, int j, Color color)
     {
-        return rectanglesMatrix[i][j];
+        rectanglesMatrix[i][j].setFill(color);
     }
 
     private void rectangleColorChanger(int i, int j, Rectangle rectangle)
@@ -61,8 +66,18 @@ public class Canvas {
                 {
                     rectangle.setFill(GUI.getLeftPane().getColorPickerClass().getColorPicker().getValue());
                     colorMatrix.setMatrixElement(i, j, GUI.getLeftPane().getColorPickerClass().getColorPicker().getValue());
-                    composeImage();
                 }
+                else if(GUI.getLeftPane().getSelectedTool() == "Eraser")
+                {
+                    rectangle.setFill(new ImagePattern(noFillImage));
+                    colorMatrix.setMatrixElement(i, j, Color.TRANSPARENT);
+                }
+                else if(GUI.getLeftPane().getSelectedTool() == "Bucket")
+                {
+                    BucketTool.bucketToolFill(i ,j, colorMatrix.getMatrixElement(i ,j), GUI.getLeftPane().getColorPickerClass().getColorPicker().getValue());
+                }
+
+                composeImage();
             }
         });
 
@@ -81,6 +96,11 @@ public class Canvas {
                     rectangle.setFill(GUI.getLeftPane().getColorPickerClass().getColorPicker().getValue());
                     colorMatrix.setMatrixElement(i, j, GUI.getLeftPane().getColorPickerClass().getColorPicker().getValue());
                 }
+                else if(GUI.getLeftPane().getSelectedTool() == "Eraser")
+                {
+                    rectangle.setFill(new ImagePattern(noFillImage));
+                    colorMatrix.setMatrixElement(i ,j, Color.TRANSPARENT);
+                }
 
                 composeImage();
             }
@@ -91,13 +111,18 @@ public class Canvas {
             public void handle(MouseEvent mouseEvent) {
                 if(GUI.getLeftPane().getSelectedTool() == "Pen")
                     rectangle.setFill(GUI.getLeftPane().getColorPickerClass().getColorPicker().getValue());
+                else if(GUI.getLeftPane().getSelectedTool() == "Eraser")
+                    rectangle.setFill(new ImagePattern(noFillImage));
             }
         });
 
         rectangle.setOnMouseExited(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent mouseEvent) {
-                rectangle.setFill(colorMatrix.getMatrixElement(i, j));
+                if(colorMatrix.getMatrixElement(i, j) != Color.TRANSPARENT)
+                    rectangle.setFill(colorMatrix.getMatrixElement(i, j));
+                else
+                    rectangle.setFill(new ImagePattern(noFillImage));
             }
         });
 
@@ -122,5 +147,15 @@ public class Canvas {
     {
         Image image = writableImage;
         return image;
+    }
+
+    public ColorMatrix getColorMatrix()
+    {
+        return colorMatrix;
+    }
+
+    public Rectangle getRectangle(int i, int j)
+    {
+        return rectanglesMatrix[i][j];
     }
 }

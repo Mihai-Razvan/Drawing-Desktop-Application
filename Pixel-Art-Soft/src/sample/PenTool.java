@@ -65,14 +65,11 @@ public class PenTool {
     private void buttonAction()
     {
         if(GUI.getLeftPane().getSelectedTool() != "Pen")
-        {
-            GUI.getLeftPane().setSelectedTool("Pen");
-            button.setBackground(new Background(new BackgroundFill(Color.web("363636"), new CornerRadii(5), Insets.EMPTY)));
-        }
+            activateTool();
         else
         {
             GUI.getLeftPane().setSelectedTool("None");
-            button.setBackground(new Background(new BackgroundFill(Color.web("4e4e4f"), new CornerRadii(5), Insets.EMPTY)));
+            deactivateTool();
         }
     }
 
@@ -84,5 +81,16 @@ public class PenTool {
     public ImageView getImageView()
     {
         return imageView;
+    }
+
+    public void activateTool()
+    {
+        GUI.getLeftPane().setSelectedTool("Pen");
+        button.setBackground(new Background(new BackgroundFill(Color.web("363636"), new CornerRadii(5), Insets.EMPTY)));
+    }
+
+    public void deactivateTool()
+    {
+        button.setBackground(new Background(new BackgroundFill(Color.web("4e4e4f"), new CornerRadii(5), Insets.EMPTY)));
     }
 }

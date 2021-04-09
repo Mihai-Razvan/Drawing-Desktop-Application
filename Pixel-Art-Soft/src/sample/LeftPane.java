@@ -13,11 +13,12 @@ public class LeftPane {
     Pane pane;
     Rectangle selectedColorRectangle;
     double rectangleSize = 60;
-
     ColorPickerClass colorPickerClass;
     String selectedTool;
+
     PenTool penTool;
     EraserTool eraserTool;
+    BucketTool bucketTool;
 
     LeftPane()
     {
@@ -31,8 +32,10 @@ public class LeftPane {
         selectedTool = "None";
         penTool = new PenTool();
         eraserTool = new EraserTool();
+        bucketTool = new BucketTool();
 
-        pane.getChildren().addAll(colorPickerClass.getColorPicker(), penTool.getButton(), penTool.getImageView(), eraserTool.getButton(), eraserTool.getImageView());
+        pane.getChildren().addAll(colorPickerClass.getColorPicker(), penTool.getButton(), penTool.getImageView(), eraserTool.getButton(), eraserTool.getImageView(),
+                bucketTool.getButton(), bucketTool.getImageView());
     }
 
     public void instantiateSelectedColorRectangle() {
@@ -55,5 +58,21 @@ public class LeftPane {
 
     public void setSelectedTool(String toolName) {
         selectedTool = toolName;
+
+        if(toolName == "Pen")
+        {
+            eraserTool.deactivateTool();
+            bucketTool.deactivateTool();
+        }
+        else if(toolName == "Eraser")
+        {
+            penTool.deactivateTool();
+            bucketTool.deactivateTool();
+        }
+        else if(toolName == "Bucket")
+        {
+            penTool.deactivateTool();
+            eraserTool.deactivateTool();
+        }
     }
 }
