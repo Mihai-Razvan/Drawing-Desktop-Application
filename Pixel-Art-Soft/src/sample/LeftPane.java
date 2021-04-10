@@ -19,6 +19,7 @@ public class LeftPane {
     PenTool penTool;
     EraserTool eraserTool;
     BucketTool bucketTool;
+    ColorReplacerTool colorReplacerTool;
 
     LeftPane()
     {
@@ -33,9 +34,10 @@ public class LeftPane {
         penTool = new PenTool();
         eraserTool = new EraserTool();
         bucketTool = new BucketTool();
+        colorReplacerTool = new ColorReplacerTool();
 
         pane.getChildren().addAll(colorPickerClass.getColorPicker(), penTool.getButton(), penTool.getImageView(), eraserTool.getButton(), eraserTool.getImageView(),
-                bucketTool.getButton(), bucketTool.getImageView());
+                bucketTool.getButton(), bucketTool.getImageView(), colorReplacerTool.getButton(), colorReplacerTool.getImageView());
     }
 
     public void instantiateSelectedColorRectangle() {
@@ -52,6 +54,22 @@ public class LeftPane {
         return colorPickerClass;
     }
 
+    public PenTool getPenTool() {
+        return penTool;
+    }
+
+    public EraserTool getEraserTool() {
+        return eraserTool;
+    }
+
+    public BucketTool getBucketTool() {
+        return bucketTool;
+    }
+
+    public ColorReplacerTool getColorReplacerTool() {
+        return colorReplacerTool;
+    }
+
     public String getSelectedTool() {
         return selectedTool;
     }
@@ -63,16 +81,25 @@ public class LeftPane {
         {
             eraserTool.deactivateTool();
             bucketTool.deactivateTool();
+            colorReplacerTool.deactivateTool();
         }
         else if(toolName == "Eraser")
         {
             penTool.deactivateTool();
             bucketTool.deactivateTool();
+            colorReplacerTool.deactivateTool();
         }
         else if(toolName == "Bucket")
         {
             penTool.deactivateTool();
             eraserTool.deactivateTool();
+            colorReplacerTool.deactivateTool();
+        }
+        else if(toolName == "Color Replacer")
+        {
+            penTool.deactivateTool();
+            eraserTool.deactivateTool();
+            bucketTool.deactivateTool();
         }
     }
 }

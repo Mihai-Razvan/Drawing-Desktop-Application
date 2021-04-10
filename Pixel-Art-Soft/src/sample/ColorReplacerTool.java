@@ -9,22 +9,29 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 
-public class BucketTool {
+import java.awt.*;
+
+public class ColorReplacerTool {
 
     Image image;
     ImageView imageView;
     Button button;
 
-    BucketTool()
+    byte lastChanged;            //cand apesi click dr se schimba culoarea de tre schimbata si in ce se schimba si se schimba in ordine ca in pyxeledit
+    Color colorToReplace;
+    Color replacementColor;
+
+    ColorReplacerTool()
     {
-        image = new Image("icon_bucket.png");
+        image = new Image("icon_color_replacer.png");
         imageView = new ImageView(image);
         imageView.setFitWidth(25);
         imageView.setFitHeight(25);
-        imageView.setLayoutX(12.5);
+        imageView.setLayoutX(52.5);
         imageView.setLayoutY(132.5);
         imageView.setMouseTransparent(true);    //sa poti da click pe buton is cand mouseu e pi imageview
 
+        lastChanged = 2;           //chiar daca nu s-a schimbat facem asa ca la prima schimbare sa schimbe pe prima
         instantiateButton();      //am facut functie separata ca e mult cod
     }
 
@@ -35,7 +42,7 @@ public class BucketTool {
         button.setBackground(new Background(new BackgroundFill(Color.web("4e4e4f"), new CornerRadii(5), Insets.EMPTY)));
         button.setPrefWidth(30);
         button.setPrefHeight(30);
-        button.setLayoutX(10);
+        button.setLayoutX(50);
         button.setLayoutY(130);
         button.setBorder(new Border(new BorderStroke(Color.web("3a3a3a"), BorderStrokeStyle.SOLID, new CornerRadii(5), new BorderWidths(1))));
         button.setOnAction(event -> buttonAction());
@@ -50,7 +57,7 @@ public class BucketTool {
         button.setOnMouseExited(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent mouseEvent) {
-                if(GUI.getLeftPane().getSelectedTool() != "Bucket")
+                if(GUI.getLeftPane().getSelectedTool() != "Color Replacer")
                     button.setBackground(new Background(new BackgroundFill(Color.web("4e4e4f"), new CornerRadii(5), Insets.EMPTY)));
             }
         });
@@ -58,7 +65,7 @@ public class BucketTool {
 
     private void buttonAction()
     {
-        if(GUI.getLeftPane().getSelectedTool() != "Bucket")
+        if(GUI.getLeftPane().getSelectedTool() != "Color Replacer")
             activateTool();
         else
         {
@@ -79,7 +86,7 @@ public class BucketTool {
 
     public void activateTool()
     {
-        GUI.getLeftPane().setSelectedTool("Bucket");
+        GUI.getLeftPane().setSelectedTool("Color Replacer");
         button.setBackground(new Background(new BackgroundFill(Color.web("363636"), new CornerRadii(5), Insets.EMPTY)));
     }
 
@@ -88,21 +95,37 @@ public class BucketTool {
         button.setBackground(new Background(new BackgroundFill(Color.web("4e4e4f"), new CornerRadii(5), Insets.EMPTY)));
     }
 
-    public static void bucketToolFill(int i, int j, Color colorToCover, Color coveringColor)
+    public Color getColorToReplace()
     {
-        if(GUI.getCenterPane().getCanvas().getColorMatrix().getMatrixElement(i, j) == colorToCover)
-        {
-            GUI.getCenterPane().getCanvas().getColorMatrix().setMatrixElement(i, j, coveringColor);
-            GUI.getCenterPane().getCanvas().setRectangleFill(i, j, coveringColor);
+        return colorToReplace;
+    }
 
-            if(i < 15)
-                bucketToolFill(i + 1, j, colorToCover, coveringColor);
-            if(i > 0)
-                bucketToolFill(i - 1, j, colorToCover, coveringColor);
-            if(j < 15)
-                bucketToolFill(i, j + 1, colorToCover, coveringColor);
-            if(j > 0)
-                bucketToolFill(i, j - 1, colorToCover, coveringColor);
+    public Color getReplacementColor()
+    {
+        return replacementColor;
+    }
+
+    public void changeColors(Color color)      //aia de selecteaza replacementcolor si colortoreplace
+    {
+        if(lastChanged == 1)
+        {
+            lastChanged = 2;
+            colorToReplace = color;
+        }
+        else if(lastChanged == 2)
+        {
+            lastChanged = 1;
+            replacementColor = color;
         }
     }
+
+    public void replaceColor(int i, int j)      //verifica daca culoarea patratului e ca aia de trbe inlocuita si inlocuieste
+    {
+        if(GUI.getCenterPane().getCanvas().getColorMatrix().getMatrixElement(i, j) == colorToReplace)
+        {
+            GUI.getCenterPane().getCanvas().setRectangleFill(i, j, replacementColor);
+            GUI.getCenterPane().getCanvas().getColorMatrix().setMatrixElement(i, j, replacementColor);
+        }
+    }
+
 }

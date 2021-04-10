@@ -51,9 +51,12 @@ public class Canvas {
     }
 
 
-    public void setRectangleColor(int i, int j, Color color)
+    public void setRectangleFill(int i, int j, Color color)
     {
-        rectanglesMatrix[i][j].setFill(color);
+        if(color != Color.TRANSPARENT)
+            rectanglesMatrix[i][j].setFill(color);
+        else
+            rectanglesMatrix[i][j].setFill(new ImagePattern(noFillImage));
     }
 
     private void rectangleColorChanger(int i, int j, Rectangle rectangle)
@@ -76,6 +79,13 @@ public class Canvas {
                 {
                     BucketTool.bucketToolFill(i ,j, colorMatrix.getMatrixElement(i ,j), GUI.getLeftPane().getColorPickerClass().getColorPicker().getValue());
                 }
+                else if(GUI.getLeftPane().getSelectedTool() == "Color Replacer")
+                {
+                    if(event.isSecondaryButtonDown())        ///mouse sa aleaga culorile
+                        GUI.getLeftPane().getColorReplacerTool().changeColors(colorMatrix.getMatrixElement(i, j));
+                    else if(event.isPrimaryButtonDown())
+                        GUI.getLeftPane().getColorReplacerTool().replaceColor(i, j);
+                }
 
                 composeImage();
             }
@@ -90,7 +100,7 @@ public class Canvas {
 
         rectangle.setOnMouseDragOver(new EventHandler<MouseDragEvent>() {
             @Override
-            public void handle(MouseDragEvent mouseDragEvent) {
+            public void handle(MouseDragEvent event) {
                 if(GUI.getLeftPane().getSelectedTool() == "Pen")
                 {
                     rectangle.setFill(GUI.getLeftPane().getColorPickerClass().getColorPicker().getValue());
@@ -100,6 +110,11 @@ public class Canvas {
                 {
                     rectangle.setFill(new ImagePattern(noFillImage));
                     colorMatrix.setMatrixElement(i ,j, Color.TRANSPARENT);
+                }
+                else if(GUI.getLeftPane().getSelectedTool() == "Color Replacer")
+                {
+                    if(event.isPrimaryButtonDown())
+                        GUI.getLeftPane().getColorReplacerTool().replaceColor(i ,j);
                 }
 
                 composeImage();

@@ -3,6 +3,9 @@ package sample;
 import javafx.scene.control.ColorPicker;
 import javafx.scene.paint.Color;
 
+import java.awt.*;
+import java.beans.EventHandler;
+
 public class ColorPickerClass {
 
     ColorPicker colorPicker;
