@@ -25,4 +25,9 @@ public class ColorPickerClass {
     {
         return colorPicker;
     }
+
+    public void setOpacity(double opacity)
+    {
+        colorPicker.setOpacity(opacity);
+    }
 }
