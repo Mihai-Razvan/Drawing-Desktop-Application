@@ -1,5 +1,7 @@
 package sample;
 
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.scene.control.ColorPicker;
 import javafx.scene.paint.Color;
 
@@ -28,6 +30,7 @@ public class ColorPickerClass {
 
     public void setOpacity(double opacity)
     {
-        colorPicker.setOpacity(opacity);
+        opacity = opacity / 100;          //opacity e intre 1 si 100 si in setValue e intre 0 si 1
+        colorPicker.setValue(new Color(colorPicker.getValue().getRed(), colorPicker.getValue().getGreen(), colorPicker.getValue().getBlue(), opacity));
     }
 }

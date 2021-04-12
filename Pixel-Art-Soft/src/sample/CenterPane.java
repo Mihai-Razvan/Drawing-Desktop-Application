@@ -26,7 +26,7 @@ public class CenterPane {
 
         for(int i = 0; i < 16; i++)
             for(int j = 0; j < 16; j++)
-                pane.getChildren().add(canvas.getRectangle(i, j));
+                pane.getChildren().addAll( canvas.getBackgroundRectangle(i, j), canvas.getRectangle(i, j));
     }
 
     public Pane getPane()

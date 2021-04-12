@@ -21,7 +21,6 @@ public class PenToolOptions {
     Group group;
     Label opacityLabel;
     TextField opacityTF;
-    TextField sizeTF;
 
     PenToolOptions()
     {
@@ -29,6 +28,7 @@ public class PenToolOptions {
         instantiateOpacity();
 
         group = new Group();
+        setVisible(false);
         group.setLayoutY(25);
         group.getChildren().addAll(penImageView, opacityTF, opacityLabel);
     }
@@ -41,7 +41,7 @@ public class PenToolOptions {
         opacityLabel.setLayoutX(55);
         opacityLabel.setLayoutY(4);
 
-        opacityTF = new TextField("255");
+        opacityTF = new TextField("100");
         opacityTF.setPrefSize(40, 5);
         opacityTF.setLayoutX(50);
         opacityTF.setLayoutY(18);
@@ -53,6 +53,9 @@ public class PenToolOptions {
             public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
                 if (!newValue.matches("\\d*"))
                     opacityTF.setText(newValue.replaceAll("[^\\d]", ""));
+
+                if(!opacityTF.getText().isBlank() && Integer.parseInt(opacityTF.getText()) > 100)     //mai mic ca 0 nu poate fi ca nu poate fi pus - inainte de nr pt ca aia de mai sus sa poata numa nr
+                    opacityTF.setText("100");
 
                 GUI.getLeftPane().getColorPickerClass().setOpacity(getOpacity());
             }
@@ -74,9 +77,14 @@ public class PenToolOptions {
         return group;
     }
 
-    public double getOpacity()
+    public void setVisible(boolean b)
     {
-        if(opacityLabel.getText().isBlank())
+        group.setVisible(b);
+    }
+
+    public int getOpacity()
+    {
+        if(opacityTF.getText().isBlank())
             return 0;
         else
             return Integer.parseInt(opacityTF.getText());

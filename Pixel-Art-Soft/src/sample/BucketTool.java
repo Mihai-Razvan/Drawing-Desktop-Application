@@ -80,11 +80,13 @@ public class BucketTool {
     public void activateTool()
     {
         GUI.getLeftPane().setSelectedTool("Bucket");
+        GUI.getTopPane().getBucketToolOptions().setVisible(true);
         button.setBackground(new Background(new BackgroundFill(Color.web("363636"), new CornerRadii(5), Insets.EMPTY)));
     }
 
     public void deactivateTool()
     {
+        GUI.getTopPane().getBucketToolOptions().setVisible(false);
         button.setBackground(new Background(new BackgroundFill(Color.web("4e4e4f"), new CornerRadii(5), Insets.EMPTY)));
     }
 

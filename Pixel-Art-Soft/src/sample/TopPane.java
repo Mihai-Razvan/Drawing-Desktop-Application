@@ -9,6 +9,9 @@ public class TopPane {
     Pane pane;
     ProjectMenu projectMenu;
     PenToolOptions penToolOptions;
+    EraserToolOptions eraserToolOptions;
+    BucketToolOptions bucketToolOptions;
+    ColorReplacerToolOptions colorReplacerToolOptions;
 
     TopPane()
     {
@@ -20,12 +23,36 @@ public class TopPane {
 
         projectMenu = new ProjectMenu();
         penToolOptions = new PenToolOptions();
+        eraserToolOptions = new EraserToolOptions();
+        bucketToolOptions = new BucketToolOptions();
+        colorReplacerToolOptions = new ColorReplacerToolOptions();
 
-        pane.getChildren().addAll(projectMenu.getMenuBar(), penToolOptions.getGroup());
+        pane.getChildren().addAll(projectMenu.getMenuBar(), penToolOptions.getGroup(), eraserToolOptions.getGroup(), bucketToolOptions.getGroup(),
+                colorReplacerToolOptions.getGroup());
     }
 
     public Pane getPane()
     {
         return pane;
+    }
+
+    public PenToolOptions getPenToolOptions()
+    {
+        return penToolOptions;
+    }
+
+    public EraserToolOptions getEraserToolOptions()
+    {
+        return eraserToolOptions;
+    }
+
+    public BucketToolOptions getBucketToolOptions()
+    {
+        return bucketToolOptions;
+    }
+
+    public ColorReplacerToolOptions getColorReplacerToolOptions()
+    {
+        return colorReplacerToolOptions;
     }
 }

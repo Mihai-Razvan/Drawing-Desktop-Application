@@ -13,6 +13,7 @@ import javafx.scene.shape.Rectangle;
 public class Canvas {
 
     Rectangle[][] rectanglesMatrix;
+    Rectangle[][] backgroundRectanglesMatrix;       //alea de no fill
     ColorMatrix colorMatrix;
     Image noFillImage;
     double paneCenterX;
@@ -25,6 +26,7 @@ public class Canvas {
     Canvas(double paneWidth, double paneHeight)
     {
         rectanglesMatrix = new Rectangle[16][16];
+        backgroundRectanglesMatrix = new Rectangle[16][16];
         colorMatrix = new ColorMatrix();
         writableImage = new WritableImage(128, 128);
 
@@ -46,17 +48,18 @@ public class Canvas {
                 (paneCenterY - drawingHeight / 2) + j * squareSize, squareSize, squareSize);
         rectanglesMatrix[i][j].setStroke(Color.BLACK);
         final Rectangle rectangle = rectanglesMatrix[i][j];
-        rectangle.setFill(new ImagePattern(noFillImage));
+        rectangle.setFill(Color.TRANSPARENT);
         rectangleColorChanger(i, j, rectangle);
+
+        backgroundRectanglesMatrix[i][j] = new Rectangle((paneCenterX - drawingWidth / 2) + i * squareSize,
+                (paneCenterY - drawingHeight / 2) + j * squareSize, squareSize, squareSize);
+        backgroundRectanglesMatrix[i][j].setFill(new ImagePattern(noFillImage));
     }
 
 
     public void setRectangleFill(int i, int j, Color color)
     {
-        if(color != Color.TRANSPARENT)
-            rectanglesMatrix[i][j].setFill(color);
-        else
-            rectanglesMatrix[i][j].setFill(new ImagePattern(noFillImage));
+        rectanglesMatrix[i][j].setFill(color);
     }
 
     private void rectangleColorChanger(int i, int j, Rectangle rectangle)
@@ -72,7 +75,7 @@ public class Canvas {
                 }
                 else if(GUI.getLeftPane().getSelectedTool() == "Eraser")
                 {
-                    rectangle.setFill(new ImagePattern(noFillImage));
+                    rectangle.setFill(Color.TRANSPARENT);
                     colorMatrix.setMatrixElement(i, j, Color.TRANSPARENT);
                 }
                 else if(GUI.getLeftPane().getSelectedTool() == "Bucket")
@@ -108,7 +111,7 @@ public class Canvas {
                 }
                 else if(GUI.getLeftPane().getSelectedTool() == "Eraser")
                 {
-                    rectangle.setFill(new ImagePattern(noFillImage));
+                    rectangle.setFill(Color.TRANSPARENT);
                     colorMatrix.setMatrixElement(i ,j, Color.TRANSPARENT);
                 }
                 else if(GUI.getLeftPane().getSelectedTool() == "Color Replacer")
@@ -127,17 +130,14 @@ public class Canvas {
                 if(GUI.getLeftPane().getSelectedTool() == "Pen")
                     rectangle.setFill(GUI.getLeftPane().getColorPickerClass().getColorPicker().getValue());
                 else if(GUI.getLeftPane().getSelectedTool() == "Eraser")
-                    rectangle.setFill(new ImagePattern(noFillImage));
+                    rectangle.setFill(Color.TRANSPARENT);
             }
         });
 
         rectangle.setOnMouseExited(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent mouseEvent) {
-                if(colorMatrix.getMatrixElement(i, j) != Color.TRANSPARENT)
-                    rectangle.setFill(colorMatrix.getMatrixElement(i, j));
-                else
-                    rectangle.setFill(new ImagePattern(noFillImage));
+                rectangle.setFill(colorMatrix.getMatrixElement(i, j));
             }
         });
 
@@ -172,5 +172,10 @@ public class Canvas {
     public Rectangle getRectangle(int i, int j)
     {
         return rectanglesMatrix[i][j];
+    }
+
+    public Rectangle getBackgroundRectangle(int i, int j)
+    {
+        return backgroundRectanglesMatrix[i][j];
     }
 }
