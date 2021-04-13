@@ -131,6 +131,8 @@ public class Canvas {
                     rectangle.setFill(GUI.getLeftPane().getColorPickerClass().getColorPicker().getValue());
                 else if(GUI.getLeftPane().getSelectedTool() == "Eraser")
                     rectangle.setFill(Color.TRANSPARENT);
+                else if(GUI.getLeftPane().getSelectedTool() == "Bucket")
+                    rectangle.setFill(GUI.getLeftPane().getColorPickerClass().getColorPicker().getValue());
             }
         });
 

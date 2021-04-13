@@ -9,8 +9,6 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 
-import java.awt.*;
-
 public class ColorReplacerTool {
 
     Image image;
@@ -125,10 +123,10 @@ public class ColorReplacerTool {
 
     public void replaceColor(int i, int j)      //verifica daca culoarea patratului e ca aia de trbe inlocuita si inlocuieste
     {
-        if(GUI.getCenterPane().getCanvas().getColorMatrix().getMatrixElement(i, j) == colorToReplace)
+        if(GUI.getCenterPane().getActualCanvas().getColorMatrix().getMatrixElement(i, j) == colorToReplace)
         {
-            GUI.getCenterPane().getCanvas().setRectangleFill(i, j, replacementColor);
-            GUI.getCenterPane().getCanvas().getColorMatrix().setMatrixElement(i, j, replacementColor);
+            GUI.getCenterPane().getActualCanvas().setRectangleFill(i, j, replacementColor);
+            GUI.getCenterPane().getActualCanvas().getColorMatrix().setMatrixElement(i, j, replacementColor);
         }
     }
 

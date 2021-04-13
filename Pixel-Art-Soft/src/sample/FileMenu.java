@@ -12,19 +12,19 @@ import java.io.IOException;
 public class FileMenu {
 
     Menu menu;
-    MenuItem saveMenuItem;
-    MenuItem saveAsMenuItem;
+    MenuItem newMenuItem;
     MenuItem exportMenuItem;
 
     FileMenu()
     {
         menu = new Menu("File");
-        saveMenuItem = new MenuItem("Save");
-        saveAsMenuItem = new MenuItem("Save As");
+        newMenuItem = new MenuItem("New");
+        newMenuItem.setOnAction(event -> newMenuItemAction());
+
         exportMenuItem = new MenuItem("Export");
         exportMenuItem.setOnAction(event -> exportMenuItemAction());
 
-        menu.getItems().addAll(saveMenuItem, saveAsMenuItem, exportMenuItem);
+        menu.getItems().addAll(newMenuItem, exportMenuItem);
     }
 
     public Menu getMenu()
@@ -41,12 +41,17 @@ public class FileMenu {
         if(file != null)
         {
             try{
-                ImageIO.write(SwingFXUtils.fromFXImage(GUI.getCenterPane().getCanvas().getImage(), null), "png", file);
+                ImageIO.write(SwingFXUtils.fromFXImage(GUI.getCenterPane().getActualCanvas().getImage(), null), "png", file);
             }
             catch (IOException exception) {
                 System.out.println("COULDN'T SAVE IMAGE");
             }
         }
 
+    }
+
+    private void newMenuItemAction()
+    {
+        GUI.getCenterPane().createNewProject("Project 2");
     }
 }

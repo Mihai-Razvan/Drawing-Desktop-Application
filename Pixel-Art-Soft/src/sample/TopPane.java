@@ -7,7 +7,7 @@ import javafx.scene.paint.Color;
 public class TopPane {
 
     Pane pane;
-    ProjectMenu projectMenu;
+    TopMenu topMenu;
     PenToolOptions penToolOptions;
     EraserToolOptions eraserToolOptions;
     BucketToolOptions bucketToolOptions;
@@ -21,13 +21,13 @@ public class TopPane {
         pane.setBorder(new Border(new BorderStroke(Color.BLACK, Color.BLACK, Color.BLACK, Color.BLACK, BorderStrokeStyle.NONE,
                 BorderStrokeStyle.NONE, BorderStrokeStyle.SOLID, BorderStrokeStyle.NONE, CornerRadii.EMPTY, new BorderWidths(2), Insets.EMPTY)));
 
-        projectMenu = new ProjectMenu();
+        topMenu = new TopMenu();
         penToolOptions = new PenToolOptions();
         eraserToolOptions = new EraserToolOptions();
         bucketToolOptions = new BucketToolOptions();
         colorReplacerToolOptions = new ColorReplacerToolOptions();
 
-        pane.getChildren().addAll(projectMenu.getMenuBar(), penToolOptions.getGroup(), eraserToolOptions.getGroup(), bucketToolOptions.getGroup(),
+        pane.getChildren().addAll(topMenu.getMenuBar(), penToolOptions.getGroup(), eraserToolOptions.getGroup(), bucketToolOptions.getGroup(),
                 colorReplacerToolOptions.getGroup());
     }
 

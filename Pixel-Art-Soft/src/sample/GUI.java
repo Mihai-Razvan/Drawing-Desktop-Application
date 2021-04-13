@@ -47,7 +47,7 @@ public class GUI extends Application {
         bottomPane = new BottomPane();
         leftPane = new LeftPane();
 
-        centerPane.getCanvas().composeImage();
+        centerPane.getActualCanvas().composeImage();
 
         borderPane = new BorderPane(centerPane.getPane(), topPane.getPane(), rightPane.getPane(), bottomPane.getPane(), leftPane.getPane());
         scene = new Scene(borderPane, Screen_Resolution_Width, Screen_Resolution_Height);
