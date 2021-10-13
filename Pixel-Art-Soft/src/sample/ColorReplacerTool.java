@@ -72,16 +72,6 @@ public class ColorReplacerTool {
         }
     }
 
-    public Button getButton()
-    {
-        return button;
-    }
-
-    public ImageView getImageView()
-    {
-        return imageView;
-    }
-
     public void activateTool()
     {
         GUI.getLeftPane().setSelectedTool("Color Replacer");
@@ -95,15 +85,6 @@ public class ColorReplacerTool {
         button.setBackground(new Background(new BackgroundFill(Color.web("4e4e4f"), new CornerRadii(5), Insets.EMPTY)));
     }
 
-    public Color getColorToReplace()
-    {
-        return colorToReplace;
-    }
-
-    public Color getReplacementColor()
-    {
-        return replacementColor;
-    }
 
     public void changeColors(Color color)      //aia de selecteaza replacementcolor si colortoreplace
     {
@@ -128,6 +109,27 @@ public class ColorReplacerTool {
             GUI.getCenterPane().getActualCanvas().setRectangleFill(i, j, replacementColor);
             GUI.getCenterPane().getActualCanvas().getColorMatrix().setMatrixElement(i, j, replacementColor);
         }
+    }
+
+
+    public Button getButton()
+    {
+        return button;
+    }
+
+    public ImageView getImageView()
+    {
+        return imageView;
+    }
+
+    public Color getColorToReplace()
+    {
+        return colorToReplace;
+    }
+
+    public Color getReplacementColor()
+    {
+        return replacementColor;
     }
 
 }

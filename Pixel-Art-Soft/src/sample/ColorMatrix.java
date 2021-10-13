@@ -8,22 +8,23 @@ public class ColorMatrix {
 
     Color[][] matrix;
 
-    ColorMatrix()
+    ColorMatrix(int tileWidth, int tileHeight)
     {
-        matrix = new Color[16][16];
-        for(int i = 0; i < 16; i++)
-            for(int j = 0; j < 16; j++)
+        matrix = new Color[tileHeight][tileWidth];
+        for(int i = 0; i < tileHeight; i++)
+            for(int j = 0; j < tileWidth; j++)
                 matrix[i][j] = Color.TRANSPARENT;
+    }
+
+
+    public void setMatrixElement(int i, int j, Color color)
+    {
+        matrix[i][j] = color;
     }
 
     public Color getMatrixElement(int i, int j)
     {
         return matrix[i][j];
-    }
-
-    public void setMatrixElement(int i, int j, Color color)
-    {
-        matrix[i][j] = color;
     }
 
 }

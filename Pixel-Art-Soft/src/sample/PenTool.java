@@ -73,15 +73,6 @@ public class PenTool {
         }
     }
 
-    public Button getButton()
-    {
-        return button;
-    }
-
-    public ImageView getImageView()
-    {
-        return imageView;
-    }
 
     public void activateTool()
     {
@@ -94,5 +85,15 @@ public class PenTool {
     {
         GUI.getTopPane().getPenToolOptions().setVisible(false);
         button.setBackground(new Background(new BackgroundFill(Color.web("4e4e4f"), new CornerRadii(5), Insets.EMPTY)));
+    }
+
+    public Button getButton()
+    {
+        return button;
+    }
+
+    public ImageView getImageView()
+    {
+        return imageView;
     }
 }

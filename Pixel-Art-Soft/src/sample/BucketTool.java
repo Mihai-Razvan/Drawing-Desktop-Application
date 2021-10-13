@@ -67,16 +67,6 @@ public class BucketTool {
         }
     }
 
-    public Button getButton()
-    {
-        return button;
-    }
-
-    public ImageView getImageView()
-    {
-        return imageView;
-    }
-
     public void activateTool()
     {
         GUI.getLeftPane().setSelectedTool("Bucket");
@@ -97,14 +87,25 @@ public class BucketTool {
             GUI.getCenterPane().getActualCanvas().getColorMatrix().setMatrixElement(i, j, coveringColor);
             GUI.getCenterPane().getActualCanvas().setRectangleFill(i, j, coveringColor);
 
-            if(i < 15)
+            if(i < GUI.getCenterPane().getActualCanvas().getTileHeight() - 1)
                 bucketToolFill(i + 1, j, colorToCover, coveringColor);
             if(i > 0)
                 bucketToolFill(i - 1, j, colorToCover, coveringColor);
-            if(j < 15)
+            if(j < GUI.getCenterPane().getActualCanvas().getTileWidth() - 1)
                 bucketToolFill(i, j + 1, colorToCover, coveringColor);
             if(j > 0)
                 bucketToolFill(i, j - 1, colorToCover, coveringColor);
         }
+    }
+
+
+    public Button getButton()
+    {
+        return button;
+    }
+
+    public ImageView getImageView()
+    {
+        return imageView;
     }
 }

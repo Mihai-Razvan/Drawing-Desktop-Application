@@ -19,6 +19,7 @@ public class CenterPane {
     Pane pane;
     ArrayList<Project> projectsArrayList;
     Project openedProject;        //proiectu deschis acum
+    NewProjectWindow newProjectWindow;
 
     CenterPane()
     {
@@ -28,12 +29,13 @@ public class CenterPane {
         pane.setBorder(new Border(new BorderStroke(Color.BLACK, BorderStrokeStyle.SOLID, CornerRadii.EMPTY, new BorderWidths(2))));
 
         projectsArrayList = new ArrayList<>();
-        createNewProject("Project 1");
+        newProjectWindow = new NewProjectWindow();
+        pane.getChildren().add(newProjectWindow.getPane());
     }
 
-    public void createNewProject(String name)
+    public void createNewProject(String name, int tileWidth, int tileHeight)
     {
-        Project project = new Project(name, pane.getPrefWidth(), pane.getPrefHeight());
+        Project project = new Project(name, tileWidth, tileHeight, pane.getPrefWidth(), pane.getPrefHeight());
 
         if(projectsArrayList.size() == 0)   //asta e primu element din arraylist
         {
@@ -44,25 +46,32 @@ public class CenterPane {
             project.getButton().setLayoutX(projectsArrayList.get(projectsArrayList.size() - 1).getButton().getLayoutX()
                     + projectsArrayList.get(projectsArrayList.size() - 1).getButton().getPrefWidth() + 2);
 
-            for(int i = 0; i < 16; i ++)
-                for(int j = 0; j < 16; j++)
-                    project.deleteOldCanvas(i, j);
+            for(int i = 0; i < openedProject.getTileHeight(); i ++)
+                for(int j = 0; j < openedProject.getTileWidth(); j++)
+                    Project.deleteOldCanvas(i, j);       //functia asta e statica
 
             Project.deactivateButtons();
         }
 
         pane.getChildren().add(project.getButton());
 
-        for(int i = 0; i < 16; i++)
-            for(int j = 0; j < 16; j++)
-                pane.getChildren().addAll(project.getCanvas().getBackgroundRectangle(i, j), project.getCanvas().getRectangle(i, j));
+        for(int i = 0; i < tileHeight; i++)
+            for(int j = 0; j < tileWidth; j++)
+                pane.getChildren().addAll(project.getOpenedFrame().getCanvas().getBackgroundRectangle(i, j), project.getOpenedFrame().getCanvas().getRectangle(i, j));
 
         openedProject = project;
 
         if(projectsArrayList.size() != 0)
-            project.getCanvas().composeImage();
+            project.getOpenedFrame().getCanvas().composeImage();
 
         projectsArrayList.add(project);
+        newProjectWindow.getPane().toFront();    //daca ai un ptoiect deja creat si creezi altu sa se vada fereastra de proiect nou peste canvasu vechi
+    }
+
+
+    public void setOpenedProject(Project project)
+    {
+        openedProject = project;
     }
 
     public Pane getPane()
@@ -70,14 +79,14 @@ public class CenterPane {
         return pane;
     }
 
-    public Canvas getActualCanvas()     //canvasu de la openedProject
+    public NewProjectWindow getNewProjectWindow()
     {
-        return openedProject.getCanvas();
+        return newProjectWindow;
     }
 
-    public void setOpenedProject(Project project)
+    public Canvas getActualCanvas()     //canvasu de la openedProject
     {
-        openedProject = project;
+        return openedProject.getOpenedFrame().getCanvas();
     }
 
     public Project getOpenedProject()

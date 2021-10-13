@@ -67,15 +67,6 @@ public class EraserTool {
         }
     }
 
-    public Button getButton()
-    {
-        return button;
-    }
-
-    public ImageView getImageView()
-    {
-        return imageView;
-    }
 
     public void activateTool()
     {
@@ -88,5 +79,16 @@ public class EraserTool {
     {
         GUI.getTopPane().getEraserToolOptions().setVisible(false);
         button.setBackground(new Background(new BackgroundFill(Color.web("4e4e4f"), new CornerRadii(5), Insets.EMPTY)));
+    }
+
+
+    public Button getButton()
+    {
+        return button;
+    }
+
+    public ImageView getImageView()
+    {
+        return imageView;
     }
 }

@@ -15,6 +15,7 @@ public class FileMenu {
     MenuItem newMenuItem;
     MenuItem exportMenuItem;
 
+
     FileMenu()
     {
         menu = new Menu("File");
@@ -27,10 +28,6 @@ public class FileMenu {
         menu.getItems().addAll(newMenuItem, exportMenuItem);
     }
 
-    public Menu getMenu()
-    {
-        return menu;
-    }
 
     private void exportMenuItemAction()
     {
@@ -52,6 +49,12 @@ public class FileMenu {
 
     private void newMenuItemAction()
     {
-        GUI.getCenterPane().createNewProject("Project 2");
+        GUI.getCenterPane().getNewProjectWindow().getPane().setVisible(true);
+       // GUI.getCenterPane().createNewProject("Project");
+    }
+
+    public Menu getMenu()
+    {
+        return menu;
     }
 }

@@ -46,34 +46,6 @@ public class LeftPane {
     }
 
 
-    public Pane getPane() {
-        return pane;
-    }
-
-    public ColorPickerClass getColorPickerClass() {
-        return colorPickerClass;
-    }
-
-    public PenTool getPenTool() {
-        return penTool;
-    }
-
-    public EraserTool getEraserTool() {
-        return eraserTool;
-    }
-
-    public BucketTool getBucketTool() {
-        return bucketTool;
-    }
-
-    public ColorReplacerTool getColorReplacerTool() {
-        return colorReplacerTool;
-    }
-
-    public String getSelectedTool() {
-        return selectedTool;
-    }
-
     public void setSelectedTool(String toolName) {
         selectedTool = toolName;
 
@@ -102,4 +74,35 @@ public class LeftPane {
             bucketTool.deactivateTool();
         }
     }
+
+
+    public Pane getPane() {
+        return pane;
+    }
+
+    public ColorPickerClass getColorPickerClass() {
+        return colorPickerClass;
+    }
+
+    public PenTool getPenTool() {
+        return penTool;
+    }
+
+    public EraserTool getEraserTool() {
+        return eraserTool;
+    }
+
+    public BucketTool getBucketTool() {
+        return bucketTool;
+    }
+
+    public ColorReplacerTool getColorReplacerTool() {
+        return colorReplacerTool;
+    }
+
+    public String getSelectedTool() {
+        return selectedTool;
+    }
+
+
 }

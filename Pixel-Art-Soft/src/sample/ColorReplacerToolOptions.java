@@ -65,6 +65,12 @@ public class ColorReplacerToolOptions {
         replacingLabel.setLayoutY(18);
     }
 
+
+    public void setVisible(boolean b)
+    {
+        group.setVisible(b);
+    }
+
     public void setReplacementColorRectangle(Color color)
     {
         replacementColorRectangle.setFill(color);
@@ -80,8 +86,4 @@ public class ColorReplacerToolOptions {
         return group;
     }
 
-    public void setVisible(boolean b)
-    {
-        group.setVisible(b);
-    }
 }

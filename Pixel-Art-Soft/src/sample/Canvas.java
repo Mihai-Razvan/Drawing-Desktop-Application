@@ -16,51 +16,53 @@ public class Canvas {
     Rectangle[][] backgroundRectanglesMatrix;       //alea de no fill
     ColorMatrix colorMatrix;
     Image noFillImage;
+    int tileWidth;
+    int tileHeight;
     double paneCenterX;
     double paneCenterY;
-    double drawingWidth;
-    double drawingHeight;
-    double squareSize = 30;
+ //   double drawingWidth;
+ //   double drawingHeight;
+    double squareSize;
+    double canvasSize = 640;
     WritableImage writableImage;
 
-    Canvas(double paneWidth, double paneHeight)
+    Canvas(int tileWidth, int tileHeight, double paneWidth, double paneHeight)
     {
-        rectanglesMatrix = new Rectangle[16][16];
-        backgroundRectanglesMatrix = new Rectangle[16][16];
-        colorMatrix = new ColorMatrix();
-        writableImage = new WritableImage(128, 128);
+        this.tileHeight = tileHeight;
+        this.tileWidth = tileWidth;
 
-        drawingHeight = 16 * squareSize;
-        drawingWidth = 16 * squareSize;
+        rectanglesMatrix = new Rectangle[tileHeight][tileWidth];
+        backgroundRectanglesMatrix = new Rectangle[tileHeight][tileWidth];
+        colorMatrix = new ColorMatrix(tileWidth, tileHeight);
+        writableImage = new WritableImage(8 * tileWidth, 8 * tileHeight);
+
         paneCenterX = paneWidth / 2;
         paneCenterY = paneHeight / 2;
+        squareSize = canvasSize / Integer.max(tileWidth, tileHeight);
 
         noFillImage = new Image("no_fill.png");
-        for(int i = 0; i < 16; i++)
-            for(int j = 0; j < 16; j++)
+        for(int i = 0; i <tileHeight; i++)
+            for(int j = 0; j < tileWidth; j++)
                 instantiateRectangle(i, j);
 
     }
 
+
+
     private void instantiateRectangle(int i, int j)
     {
-        rectanglesMatrix[i][j] = new Rectangle((paneCenterX - drawingWidth / 2) + i * squareSize,
-                (paneCenterY - drawingHeight / 2) + j * squareSize, squareSize, squareSize);
+        rectanglesMatrix[i][j] = new Rectangle((paneCenterX - canvasSize / 2) + i * squareSize,
+                (paneCenterY - canvasSize / 2) + j * squareSize, squareSize, squareSize);
         rectanglesMatrix[i][j].setStroke(Color.BLACK);
         final Rectangle rectangle = rectanglesMatrix[i][j];
         rectangle.setFill(Color.TRANSPARENT);
         rectangleColorChanger(i, j, rectangle);
 
-        backgroundRectanglesMatrix[i][j] = new Rectangle((paneCenterX - drawingWidth / 2) + i * squareSize,
-                (paneCenterY - drawingHeight / 2) + j * squareSize, squareSize, squareSize);
+        backgroundRectanglesMatrix[i][j] = new Rectangle((paneCenterX - canvasSize / 2) + i * squareSize,
+                (paneCenterY - canvasSize / 2) + j * squareSize, squareSize, squareSize);
         backgroundRectanglesMatrix[i][j].setFill(new ImagePattern(noFillImage));
     }
 
-
-    public void setRectangleFill(int i, int j, Color color)
-    {
-        rectanglesMatrix[i][j].setFill(color);
-    }
 
     private void rectangleColorChanger(int i, int j, Rectangle rectangle)
     {
@@ -145,12 +147,12 @@ public class Canvas {
 
     }
 
-    public void composeImage()
+    public void composeImage()     //functia asta nu doar compune imaginea ci o si adauga jos
     {
         PixelWriter pixelWriter = this.writableImage.getPixelWriter();
 
-        for(int i = 0; i < 16; i ++)
-            for(int j = 0; j < 16; j ++)
+        for(int i = 0; i < tileHeight; i ++)
+            for(int j = 0; j < tileWidth; j ++)
             {
                 for(int k = 0 ; k < 8 ; k++)
                     for(int t = 0; t < 8; t++)
@@ -159,6 +161,13 @@ public class Canvas {
 
         GUI.getBottomPane().addImageToPane(getImage());
     }
+
+
+    public void setRectangleFill(int i, int j, Color color)
+    {
+        rectanglesMatrix[i][j].setFill(color);
+    }
+
 
     public Image getImage()
     {
@@ -179,5 +188,15 @@ public class Canvas {
     public Rectangle getBackgroundRectangle(int i, int j)
     {
         return backgroundRectanglesMatrix[i][j];
+    }
+
+    public int getTileWidth()
+    {
+        return tileWidth;
+    }
+
+    public int getTileHeight()
+    {
+        return tileHeight;
     }
 }

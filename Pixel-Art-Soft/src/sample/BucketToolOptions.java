@@ -72,14 +72,16 @@ public class BucketToolOptions {
         });
     }
 
-    public Group getGroup()
-    {
-        return group;
-    }
 
     public void setVisible(boolean b)
     {
         group.setVisible(b);
+    }
+
+
+    public Group getGroup()
+    {
+        return group;
     }
 
 

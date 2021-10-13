@@ -27,13 +27,14 @@ public class BottomPane {
 
     }
 
-    public Pane getPane()
-    {
-        return pane;
-    }
 
     public void addImageToPane(Image image)
     {
         imageView.setImage(image);
+    }
+
+    public Pane getPane()
+    {
+        return pane;
     }
 }

@@ -31,13 +31,13 @@ public class EraserToolOptions {
         eraserImageView.setLayoutY(16);
     }
 
-    public Group getGroup()
-    {
-        return group;
-    }
-
     public void setVisible(boolean b)
     {
         group.setVisible(b);
+    }
+
+    public Group getGroup()
+    {
+        return group;
     }
 }

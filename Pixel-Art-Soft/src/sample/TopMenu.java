@@ -21,10 +21,6 @@ import java.io.IOException;
 public class TopMenu {
                                       //bara alba de sus de tot cu file save etc
     MenuBar menuBar;
-    Menu editMenu;
-    Menu selectionMenu;
-    Menu documentMenu;
-    Menu helpMenu;
 
     FileMenu fileMenu;
 
@@ -36,12 +32,7 @@ public class TopMenu {
 
         fileMenu = new FileMenu();
 
-        editMenu = new Menu("Edit");
-        selectionMenu = new Menu("Selection");
-        documentMenu = new Menu("Document");
-        helpMenu = new Menu("Help");
-
-        menuBar.getMenus().addAll(fileMenu.getMenu(), editMenu, selectionMenu, documentMenu, helpMenu);
+        menuBar.getMenus().add(fileMenu.getMenu());
     }
 
     public MenuBar getMenuBar()
