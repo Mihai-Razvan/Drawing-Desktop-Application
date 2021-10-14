@@ -15,17 +15,22 @@ public class Project {
     Button button;  //nutonu ala de sus cu numele proiectului de unde schimbi intre proiecte
     int tileWidth;
     int tileHeight;
+    double paneWidth;
+    double paneHeight;
 
     ArrayList<Frame> frameArrayList;
     Frame openedFrame;     //frameu deschis acum
 
-    Project(String projectName, int tileWidth, int tileHeight, double canvasWidth, double canvasHeight)
+    Project(String projectName, int tileWidth, int tileHeight, double paneWidth, double paneHeight)
     {
-        openedFrame = new Frame(tileWidth, tileHeight, canvasWidth, canvasHeight);
+        openedFrame = new Frame(tileWidth, tileHeight, paneWidth, paneHeight);
         frameArrayList = new ArrayList<Frame>();
+        frameArrayList.add(openedFrame);
 
         this.tileWidth = tileWidth;
         this.tileHeight = tileHeight;
+        this.paneWidth = paneWidth;
+        this.paneHeight = paneHeight;
         button = new Button(projectName);
         button.setBackground(new Background(new BackgroundFill(Color.web("363636"), new CornerRadii(3), Insets.EMPTY)));
         button.setTextFill(Color.WHITE);
@@ -87,5 +92,21 @@ public class Project {
     public void addNewCanvas(int i, int j)     //adauga patratelele canvasului  pe rand
     {
         GUI.getCenterPane().getPane().getChildren().addAll(openedFrame.getCanvas().getBackgroundRectangle(i ,j), openedFrame.getCanvas().getRectangle(i, j));   //adaugam canvasu proiectului actual
+    }
+
+    public void addNewFrame()
+    {
+        Frame frame = new Frame(tileWidth, tileHeight, paneWidth, paneHeight);
+        frameArrayList.add(frame);
+
+        for(int i = 0; i < tileHeight; i++)
+            for(int j = 0; j < tileWidth; j++)
+                deleteOldCanvas(i, j);
+
+        openedFrame = frame;  //asta e la mijloc pt ca deletCanvas se face pt openedFrame deci trebuie sa ramana ala vechi si addu tot pt openedFrame deci trb schimbat sal adauge pala nou
+
+        for(int i = 0; i < tileHeight; i++)
+            for(int j = 0; j < tileWidth; j++)
+                addNewCanvas(i, j);
     }
 }

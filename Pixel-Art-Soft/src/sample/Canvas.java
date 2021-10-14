@@ -20,10 +20,9 @@ public class Canvas {
     int tileHeight;
     double paneCenterX;
     double paneCenterY;
- //   double drawingWidth;
- //   double drawingHeight;
     double squareSize;
     double canvasSize = 640;
+    int pixelsPerSquare = 16;      //pt ffiecare patratel cati pixeli deseneaza
     WritableImage writableImage;
 
     Canvas(int tileWidth, int tileHeight, double paneWidth, double paneHeight)
@@ -34,14 +33,14 @@ public class Canvas {
         rectanglesMatrix = new Rectangle[tileHeight][tileWidth];
         backgroundRectanglesMatrix = new Rectangle[tileHeight][tileWidth];
         colorMatrix = new ColorMatrix(tileWidth, tileHeight);
-        writableImage = new WritableImage(8 * tileWidth, 8 * tileHeight);
+        writableImage = new WritableImage(pixelsPerSquare * tileWidth, pixelsPerSquare * tileHeight);
 
         paneCenterX = paneWidth / 2;
         paneCenterY = paneHeight / 2;
         squareSize = canvasSize / Integer.max(tileWidth, tileHeight);
 
         noFillImage = new Image("no_fill.png");
-        for(int i = 0; i <tileHeight; i++)
+        for(int i = 0; i < tileHeight; i++)
             for(int j = 0; j < tileWidth; j++)
                 instantiateRectangle(i, j);
 
@@ -154,12 +153,12 @@ public class Canvas {
         for(int i = 0; i < tileHeight; i ++)
             for(int j = 0; j < tileWidth; j ++)
             {
-                for(int k = 0 ; k < 8 ; k++)
-                    for(int t = 0; t < 8; t++)
-                        pixelWriter.setColor(i * 8+ k, j * 8 + t, colorMatrix.getMatrixElement(i, j));
+                for(int k = 0 ; k < pixelsPerSquare ; k++)
+                    for(int t = 0; t < pixelsPerSquare; t++)
+                        pixelWriter.setColor(i * pixelsPerSquare + k, j * pixelsPerSquare + t, colorMatrix.getMatrixElement(i, j));
             }
 
-        GUI.getBottomPane().addImageToPane(getImage());
+        GUI.getBottomPane().updateImage(getImage());
     }
 
 
