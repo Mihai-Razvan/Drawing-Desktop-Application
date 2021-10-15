@@ -104,10 +104,10 @@ public class ColorReplacerTool {
 
     public void replaceColor(int i, int j)      //verifica daca culoarea patratului e ca aia de trbe inlocuita si inlocuieste
     {
-        if(GUI.getCenterPane().getActualCanvas().getColorMatrix().getMatrixElement(i, j) == colorToReplace)
+        if(GUI.getCenterPane().getOpenedCanvas().getColorMatrix().getMatrixElement(i, j) == colorToReplace)
         {
-            GUI.getCenterPane().getActualCanvas().setRectangleFill(i, j, replacementColor);
-            GUI.getCenterPane().getActualCanvas().getColorMatrix().setMatrixElement(i, j, replacementColor);
+            GUI.getCenterPane().getOpenedCanvas().setRectangleFill(i, j, replacementColor);
+            GUI.getCenterPane().getOpenedCanvas().getColorMatrix().setMatrixElement(i, j, replacementColor);
         }
     }
 

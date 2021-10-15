@@ -22,13 +22,14 @@ public class Canvas {
     double paneCenterY;
     double squareSize;
     double canvasSize = 640;
-    int pixelsPerSquare = 16;      //pt ffiecare patratel cati pixeli deseneaza
+    int pixelsPerSquare;      //pt ffiecare patratel cati pixeli deseneaza
     WritableImage writableImage;
 
-    Canvas(int tileWidth, int tileHeight, double paneWidth, double paneHeight)
+    Canvas(int tileWidth, int tileHeight, double paneWidth, double paneHeight, int pixelsPerSquare)
     {
         this.tileHeight = tileHeight;
         this.tileWidth = tileWidth;
+        this.pixelsPerSquare = pixelsPerSquare;
 
         rectanglesMatrix = new Rectangle[tileHeight][tileWidth];
         backgroundRectanglesMatrix = new Rectangle[tileHeight][tileWidth];
@@ -91,7 +92,7 @@ public class Canvas {
                         GUI.getLeftPane().getColorReplacerTool().replaceColor(i, j);
                 }
 
-                composeImage();
+                GUI.getCenterPane().getOpenedProject().getOpenedFrame().composeImage();
             }
         });
 
@@ -121,7 +122,7 @@ public class Canvas {
                         GUI.getLeftPane().getColorReplacerTool().replaceColor(i ,j);
                 }
 
-                composeImage();
+                GUI.getCenterPane().getOpenedProject().getOpenedFrame().composeImage();
             }
         });
 
@@ -146,32 +147,9 @@ public class Canvas {
 
     }
 
-    public void composeImage()     //functia asta nu doar compune imaginea ci o si adauga jos
-    {
-        PixelWriter pixelWriter = this.writableImage.getPixelWriter();
-
-        for(int i = 0; i < tileHeight; i ++)
-            for(int j = 0; j < tileWidth; j ++)
-            {
-                for(int k = 0 ; k < pixelsPerSquare ; k++)
-                    for(int t = 0; t < pixelsPerSquare; t++)
-                        pixelWriter.setColor(i * pixelsPerSquare + k, j * pixelsPerSquare + t, colorMatrix.getMatrixElement(i, j));
-            }
-
-        GUI.getBottomPane().updateImage(getImage());
-    }
-
-
     public void setRectangleFill(int i, int j, Color color)
     {
         rectanglesMatrix[i][j].setFill(color);
-    }
-
-
-    public Image getImage()
-    {
-        Image image = writableImage;
-        return image;
     }
 
     public ColorMatrix getColorMatrix()

@@ -38,7 +38,7 @@ public class FileMenu {
         if(file != null)
         {
             try{
-                ImageIO.write(SwingFXUtils.fromFXImage(GUI.getCenterPane().getActualCanvas().getImage(), null), "png", file);
+                ImageIO.write(SwingFXUtils.fromFXImage(GUI.getCenterPane().getOpenedProject().getOpenedFrame().getImage(), null), "png", file);
             }
             catch (IOException exception) {
                 System.out.println("COULDN'T SAVE IMAGE");

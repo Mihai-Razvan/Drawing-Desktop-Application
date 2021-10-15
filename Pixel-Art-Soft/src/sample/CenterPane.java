@@ -62,7 +62,7 @@ public class CenterPane {
         openedProject = project;
 
         if(projectsArrayList.size() != 0)
-            project.getOpenedFrame().getCanvas().composeImage();
+            project.getOpenedFrame().composeImage();
 
         projectsArrayList.add(project);
         newProjectWindow.getPane().toFront();    //daca ai un ptoiect deja creat si creezi altu sa se vada fereastra de proiect nou peste canvasu vechi
@@ -84,7 +84,7 @@ public class CenterPane {
         return newProjectWindow;
     }
 
-    public Canvas getActualCanvas()     //canvasu de la openedProject
+    public Canvas getOpenedCanvas()     //canvasu de la openedProject/openedFrame
     {
         return openedProject.getOpenedFrame().getCanvas();
     }

@@ -72,7 +72,7 @@ public class Project {
 
         button.setBackground(new Background(new BackgroundFill(Color.web("363636"), new CornerRadii(3), Insets.EMPTY)));
         GUI.getCenterPane().setOpenedProject(this);
-        openedFrame.getCanvas().composeImage();
+        openedFrame.composeImage();
     }
 
     public static void deactivateButtons()       //le schimba culoarea butoanelor proiectelor ca si cand nu ar fi deschis proiectu

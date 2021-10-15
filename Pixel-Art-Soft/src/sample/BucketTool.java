@@ -82,16 +82,16 @@ public class BucketTool {
 
     public static void bucketToolFill(int i, int j, Color colorToCover, Color coveringColor)
     {
-        if(GUI.getCenterPane().getActualCanvas().getColorMatrix().getMatrixElement(i, j) == colorToCover)
+        if(GUI.getCenterPane().getOpenedCanvas().getColorMatrix().getMatrixElement(i, j) == colorToCover)
         {
-            GUI.getCenterPane().getActualCanvas().getColorMatrix().setMatrixElement(i, j, coveringColor);
-            GUI.getCenterPane().getActualCanvas().setRectangleFill(i, j, coveringColor);
+            GUI.getCenterPane().getOpenedCanvas().getColorMatrix().setMatrixElement(i, j, coveringColor);
+            GUI.getCenterPane().getOpenedCanvas().setRectangleFill(i, j, coveringColor);
 
-            if(i < GUI.getCenterPane().getActualCanvas().getTileHeight() - 1)
+            if(i < GUI.getCenterPane().getOpenedCanvas().getTileHeight() - 1)
                 bucketToolFill(i + 1, j, colorToCover, coveringColor);
             if(i > 0)
                 bucketToolFill(i - 1, j, colorToCover, coveringColor);
-            if(j < GUI.getCenterPane().getActualCanvas().getTileWidth() - 1)
+            if(j < GUI.getCenterPane().getOpenedCanvas().getTileWidth() - 1)
                 bucketToolFill(i, j + 1, colorToCover, coveringColor);
             if(j > 0)
                 bucketToolFill(i, j - 1, colorToCover, coveringColor);
