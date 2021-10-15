@@ -23,7 +23,7 @@ public class Project {
 
     Project(String projectName, int tileWidth, int tileHeight, double paneWidth, double paneHeight)
     {
-        openedFrame = new Frame(tileWidth, tileHeight, paneWidth, paneHeight);
+        openedFrame = new Frame(tileWidth, tileHeight, paneWidth, paneHeight, 0);
         frameArrayList = new ArrayList<Frame>();
         frameArrayList.add(openedFrame);
 
@@ -46,6 +46,11 @@ public class Project {
     public Frame getOpenedFrame()
     {
         return openedFrame;
+    }
+
+    public ArrayList<Frame> getFrameArrayList()
+    {
+        return frameArrayList;
     }
 
     public int getTileWidth()
@@ -96,7 +101,8 @@ public class Project {
 
     public void addNewFrame()
     {
-        Frame frame = new Frame(tileWidth, tileHeight, paneWidth, paneHeight);
+        int framesNumber = frameArrayList.size();  //nu mai adaugam 1 pt ca numaram frameurile de la 0
+        Frame frame = new Frame(tileWidth, tileHeight, paneWidth, paneHeight, framesNumber);
         frameArrayList.add(frame);
 
         for(int i = 0; i < tileHeight; i++)
@@ -109,4 +115,6 @@ public class Project {
             for(int j = 0; j < tileWidth; j++)
                 addNewCanvas(i, j);
     }
+
+
 }

@@ -50,7 +50,7 @@ public class FileMenu {
     private void newMenuItemAction()
     {
         GUI.getCenterPane().getNewProjectWindow().getPane().setVisible(true);
-       // GUI.getCenterPane().createNewProject("Project");
+        GUI.getCenterPane().getNewProjectWindow().getPane().toFront();    //daca nu fac asta dupa ce adaug un fframe nou si incerc sa creez un proiect nou nu se mai vede newProjectWindow ca e in spatele canvasului
     }
 
     public Menu getMenu()
