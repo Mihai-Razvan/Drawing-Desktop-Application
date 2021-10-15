@@ -6,6 +6,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.image.PixelWriter;
 import javafx.scene.image.WritableImage;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.input.MouseEvent;
 
 public class Frame {
 
@@ -29,33 +30,46 @@ public class Frame {
         setImageView();
     }
 
-    private void setImageView()
+    private void setImageView()     //aici se intampla si schimbarea frameului atunci cand apesi pe imageViewul frameului pe care vrei sa l deschizi
     {
         imageView = new ImageView();
         imageView.setLayoutY(40);
         double xPos = 100 + frameNumber * 150;
         imageView.setLayoutX(xPos);
 
-      /*  imageView.setOnKeyPressed(new EventHandler<KeyEvent>() {
+        imageView.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
-            public void handle(KeyEvent keyEvent) {
+            public void handle(MouseEvent mouseEvent) {
 
-                for(int i = 0; i < imageViewArrayList.size(); i++)
-                    if(imageView == imageViewArrayList.get(i))
-                        break;
+                for(int i = 0; i < tileHeight; i++)
+                    for(int j = 0; j < tileWidth; j++)
+                        Project.deleteOldCanvas(i, j);
 
-                //     GUI.getCenterPane().getOpenedProject().setOpenedFrame(i);
+                GUI.getCenterPane().getOpenedProject().setOpenedFrame(GUI.getCenterPane().getOpenedProject().getFrameArrayList().get(frameNumber));
+
+                for(int i = 0; i < tileHeight; i++)
+                    for(int j = 0; j < tileWidth; j++)
+                        Project.addNewCanvas(i, j);
             }
         });
-
-       */
-
+        
         GUI.getBottomPane().getPane().getChildren().add(imageView);
     }
 
     public Canvas getCanvas()
     {
         return canvas;
+    }
+
+    public ImageView getImageView()
+    {
+        return imageView;
+    }
+
+    public Image getImage()
+    {
+        Image image = writableImage;
+        return image;
     }
 
     public void composeImage()     //functia asta nu doar compune imaginea ci o si adauga jos
@@ -73,14 +87,4 @@ public class Frame {
         imageView.setImage(getImage());
     }
 
-    public ImageView getImageView()
-    {
-        return imageView;
-    }
-
-    public Image getImage()
-    {
-        Image image = writableImage;
-        return image;
-    }
 }

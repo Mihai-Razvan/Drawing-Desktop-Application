@@ -54,12 +54,11 @@ public class CenterPane {
         }
 
         pane.getChildren().add(project.getButton());
+        openedProject = project;
 
         for(int i = 0; i < tileHeight; i++)
             for(int j = 0; j < tileWidth; j++)
-                pane.getChildren().addAll(project.getOpenedFrame().getCanvas().getBackgroundRectangle(i, j), project.getOpenedFrame().getCanvas().getRectangle(i, j));
-
-        openedProject = project;
+                Project.addNewCanvas(i, j);
 
         if(projectsArrayList.size() != 0)
             project.getOpenedFrame().composeImage();
@@ -67,7 +66,6 @@ public class CenterPane {
         projectsArrayList.add(project);
         newProjectWindow.getPane().toFront();    //daca ai un ptoiect deja creat si creezi altu sa se vada fereastra de proiect nou peste canvasu vechi
     }
-
 
     public void setOpenedProject(Project project)
     {
