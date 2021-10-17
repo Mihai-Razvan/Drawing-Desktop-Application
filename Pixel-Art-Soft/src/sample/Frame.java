@@ -27,12 +27,13 @@ public class Frame {
         this.tileWidth = tileWidth;
         this.frameNumber = frameNumber;
 
-        setImageView();
+        imageView = new ImageView();
+
+        addImageView();
     }
 
-    private void setImageView()     //aici se intampla si schimbarea frameului atunci cand apesi pe imageViewul frameului pe care vrei sa l deschizi
+    public void addImageView()     //aici se intampla si schimbarea frameului atunci cand apesi pe imageViewul frameului pe care vrei sa l deschizi
     {
-        imageView = new ImageView();
         imageView.setLayoutY(40);
         double xPos = 100 + frameNumber * 150;
         imageView.setLayoutX(xPos);
@@ -61,11 +62,6 @@ public class Frame {
         return canvas;
     }
 
-    public ImageView getImageView()
-    {
-        return imageView;
-    }
-
     public Image getImage()
     {
         Image image = writableImage;
@@ -87,4 +83,8 @@ public class Frame {
         imageView.setImage(getImage());
     }
 
+    public void deleteImageView()     //sterge imageviewul asta. se fol pt cand schimbi proiectul si face loop prin toate frameurile si ia fct asta
+    {
+        GUI.getBottomPane().getPane().getChildren().remove(imageView);
+    }
 }

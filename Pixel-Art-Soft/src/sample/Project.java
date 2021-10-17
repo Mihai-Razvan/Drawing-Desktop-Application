@@ -58,6 +58,11 @@ public class Project {
         return frameArrayList;
     }
 
+    public int getFramesNumber()
+    {
+        return getFrameArrayList().size();
+    }
+
     public int getTileWidth()
     {
         return tileWidth;
@@ -68,9 +73,20 @@ public class Project {
         return tileHeight;
     }
 
-    private void changeProject()               //apesi pe buton se schimba proiectu la care esti canvas imagine etc
+    private void changeProject()               //apesi pe buton se schimba proiectu la care eesti in asta
     {
         deactivateButtons();
+
+        ArrayList<Frame> openedProjectFrameArrayList = GUI.getCenterPane().getOpenedProject().getFrameArrayList();
+        int framesNumber = openedProjectFrameArrayList.size();               //nr de frameuri din opened project
+        for(int i = 0; i < framesNumber; i++)
+            openedProjectFrameArrayList.get(i).deleteImageView();
+
+        framesNumber = frameArrayList.size();
+
+        for(int i = 0; i < framesNumber; i++)
+            frameArrayList.get(i).addImageView();
+        
 
         for(int i = 0; i < GUI.getCenterPane().getOpenedProject().getTileHeight(); i ++)
             for(int j = 0; j < GUI.getCenterPane().getOpenedProject().getTileWidth(); j++)

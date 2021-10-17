@@ -53,6 +53,15 @@ public class CenterPane {
             Project.deactivateButtons();
         }
 
+        if(projectsArrayList.size() != 0)       //sterge imageviewurile de la frameurile din opened project
+        {
+            int framesNumber = openedProject.getFramesNumber();
+            ArrayList<Frame> arrayList = openedProject.getFrameArrayList();
+            for (int i = 0; i < framesNumber; i++)
+                arrayList.get(i).deleteImageView();
+        }
+
+            // nu este nevoie sa adaugam aici imageviewurile de la noul proiect pt ca atunci cand creezi un proiect se creeaza si primul frame automat si odata cu el si primul imageview
         pane.getChildren().add(project.getButton());
         openedProject = project;
 
