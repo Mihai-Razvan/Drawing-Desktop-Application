@@ -7,6 +7,7 @@ import javafx.scene.image.PixelWriter;
 import javafx.scene.image.WritableImage;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.paint.Color;
 
 public class Frame {
 
@@ -29,7 +30,11 @@ public class Frame {
 
         imageView = new ImageView();
 
+        if(frameNumber != 0)
+            duplicateCanvas();
+
         addImageView();
+        composeImage();
     }
 
     public void addImageView()     //aici se intampla si schimbarea frameului atunci cand apesi pe imageViewul frameului pe care vrei sa l deschizi
@@ -68,6 +73,17 @@ public class Frame {
         return image;
     }
 
+    public void duplicateCanvas()    //cand creezi frameul canvasul lui sa fie identic cu canvasul ultimului frame din arrayList
+    {
+        for(int i = 0; i < tileHeight; i++)
+            for(int j = 0; j < tileWidth; j++)
+            {
+                Color color = GUI.getCenterPane().getOpenedProject().getFrameArrayList().get(frameNumber - 1).getCanvas().getColorMatrix().getMatrixElement(i , j);
+                canvas.getColorMatrix().setMatrixElement(i, j, color);
+                canvas.setRectangleFill(i, j, color);
+            }
+    }
+
     public void composeImage()     //functia asta nu doar compune imaginea ci o si adauga jos
     {
         PixelWriter pixelWriter = this.writableImage.getPixelWriter();
@@ -77,7 +93,15 @@ public class Frame {
             {
                 for(int k = 0 ; k < pixelsPerSquare ; k++)
                     for(int t = 0; t < pixelsPerSquare; t++)
-                        pixelWriter.setColor(i * pixelsPerSquare + k, j * pixelsPerSquare + t, canvas.getColorMatrix().getMatrixElement(i, j));
+                    {
+                        Color color;
+                        if(canvas.getColorMatrix().getMatrixElement(i ,j) == Color.TRANSPARENT)
+                            color = Color.WHITE;
+                        else
+                            color = canvas.getColorMatrix().getMatrixElement(i, j);
+
+                        pixelWriter.setColor(i * pixelsPerSquare + k, j * pixelsPerSquare + t, color);
+                    }
             }
 
         imageView.setImage(getImage());

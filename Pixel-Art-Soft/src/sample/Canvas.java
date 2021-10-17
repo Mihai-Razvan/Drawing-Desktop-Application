@@ -47,8 +47,6 @@ public class Canvas {
 
     }
 
-
-
     private void instantiateRectangle(int i, int j)
     {
         rectanglesMatrix[i][j] = new Rectangle((paneCenterX - canvasSize / 2) + i * squareSize,
@@ -63,8 +61,7 @@ public class Canvas {
         backgroundRectanglesMatrix[i][j].setFill(new ImagePattern(noFillImage));
     }
 
-
-    private void rectangleColorChanger(int i, int j, Rectangle rectangle)
+    private void rectangleColorChanger(int i, int j, Rectangle rectangle)   //asta e pt tooluri gen pen guma etc
     {
         rectangle.setOnMousePressed(new EventHandler<MouseEvent>() {
 
@@ -147,7 +144,7 @@ public class Canvas {
 
     }
 
-    public void setRectangleFill(int i, int j, Color color)
+    public void setRectangleFill(int i, int j, Color color)      //asta e ca sa setezi culoarea unui rectangle
     {
         rectanglesMatrix[i][j].setFill(color);
     }
