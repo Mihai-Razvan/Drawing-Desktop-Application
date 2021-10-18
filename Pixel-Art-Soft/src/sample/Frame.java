@@ -73,6 +73,11 @@ public class Frame {
         return image;
     }
 
+    public ImageView getImageView()
+    {
+        return imageView;
+    }
+
     public void duplicateCanvas()    //cand creezi frameul canvasul lui sa fie identic cu canvasul ultimului frame din arrayList
     {
         for(int i = 0; i < tileHeight; i++)
