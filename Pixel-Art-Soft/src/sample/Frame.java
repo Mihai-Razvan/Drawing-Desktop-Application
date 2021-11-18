@@ -96,17 +96,13 @@ public class Frame {
         for(int i = 0; i < tileHeight; i ++)
             for(int j = 0; j < tileWidth; j ++)
             {
-                for(int k = 0 ; k < pixelsPerSquare ; k++)
-                    for(int t = 0; t < pixelsPerSquare; t++)
-                    {
-                        Color color;
-                        if(canvas.getColorMatrix().getMatrixElement(i ,j) == Color.TRANSPARENT)
-                            color = Color.WHITE;
-                        else
-                            color = canvas.getColorMatrix().getMatrixElement(i, j);
+                Color color;
+                if(canvas.getColorMatrix().getMatrixElement(i ,j) == Color.TRANSPARENT)
+                    color = Color.WHITE;
+                else
+                    color = canvas.getColorMatrix().getMatrixElement(i, j);
 
-                        pixelWriter.setColor(i * pixelsPerSquare + k, j * pixelsPerSquare + t, color);
-                    }
+                pixelWriter.setColor(i, j, color);
             }
 
         imageView.setImage(getImage());

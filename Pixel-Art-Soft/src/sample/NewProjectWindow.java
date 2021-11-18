@@ -96,8 +96,8 @@ public class NewProjectWindow {
                 if (!newValue.matches("\\d*"))
                     tileWidthTF.setText(newValue.replaceAll("[^\\d]", ""));
 
-                if(!tileWidthTF.getText().isBlank() && Integer.parseInt(tileWidthTF.getText()) > 64)
-                    tileWidthTF.setText("64");
+                if(!tileWidthTF.getText().isBlank() && Integer.parseInt(tileWidthTF.getText()) > 512)
+                    tileWidthTF.setText("512");
                 else if(!tileWidthTF.getText().isBlank() && Integer.parseInt(tileWidthTF.getText()) < 1)
                     tileWidthTF.setText("1");
             }
@@ -109,8 +109,8 @@ public class NewProjectWindow {
                 if (!newValue.matches("\\d*"))
                     tileHeightTF.setText(newValue.replaceAll("[^\\d]", ""));
 
-                if(!tileHeightTF.getText().isBlank() && Integer.parseInt(tileHeightTF.getText()) > 64)
-                    tileHeightTF.setText("64");
+                if(!tileHeightTF.getText().isBlank() && Integer.parseInt(tileHeightTF.getText()) > 512)
+                    tileHeightTF.setText("512");
                 else if(!tileHeightTF.getText().isBlank() && Integer.parseInt(tileHeightTF.getText()) < 1)
                     tileHeightTF.setText("1");
             }

@@ -13,9 +13,7 @@ import javafx.scene.shape.Rectangle;
 public class Canvas {
 
     Rectangle[][] rectanglesMatrix;
-    Rectangle[][] backgroundRectanglesMatrix;       //alea de no fill
     ColorMatrix colorMatrix;
-    Image noFillImage;
     int tileWidth;
     int tileHeight;
     double paneCenterX;
@@ -32,7 +30,6 @@ public class Canvas {
         this.pixelsPerSquare = pixelsPerSquare;
 
         rectanglesMatrix = new Rectangle[tileHeight][tileWidth];
-        backgroundRectanglesMatrix = new Rectangle[tileHeight][tileWidth];
         colorMatrix = new ColorMatrix(tileWidth, tileHeight);
         writableImage = new WritableImage(pixelsPerSquare * tileWidth, pixelsPerSquare * tileHeight);
 
@@ -40,7 +37,6 @@ public class Canvas {
         paneCenterY = paneHeight / 2;
         squareSize = canvasSize / Integer.max(tileWidth, tileHeight);
 
-        noFillImage = new Image("no_fill.png");
         for(int i = 0; i < tileHeight; i++)
             for(int j = 0; j < tileWidth; j++)
                 instantiateRectangle(i, j);
@@ -51,14 +47,10 @@ public class Canvas {
     {
         rectanglesMatrix[i][j] = new Rectangle((paneCenterX - canvasSize / 2) + i * squareSize,
                 (paneCenterY - canvasSize / 2) + j * squareSize, squareSize, squareSize);
-        rectanglesMatrix[i][j].setStroke(Color.BLACK);
         final Rectangle rectangle = rectanglesMatrix[i][j];
         rectangle.setFill(Color.TRANSPARENT);
+        rectangle.setStroke(rectangle.getFill());     // ca sa nu ramana linia aia libera intre triunghiuri punem strokeu de ac culoare cu triunghiu
         rectangleColorChanger(i, j, rectangle);
-
-        backgroundRectanglesMatrix[i][j] = new Rectangle((paneCenterX - canvasSize / 2) + i * squareSize,
-                (paneCenterY - canvasSize / 2) + j * squareSize, squareSize, squareSize);
-        backgroundRectanglesMatrix[i][j].setFill(new ImagePattern(noFillImage));
     }
 
     private void rectangleColorChanger(int i, int j, Rectangle rectangle)   //asta e pt tooluri gen pen guma etc
@@ -70,11 +62,13 @@ public class Canvas {
                 if(GUI.getLeftPane().getSelectedTool() == "Pen")
                 {
                     rectangle.setFill(GUI.getLeftPane().getColorPickerClass().getColorPicker().getValue());
+                    rectangle.setStroke(rectangle.getFill());
                     colorMatrix.setMatrixElement(i, j, GUI.getLeftPane().getColorPickerClass().getColorPicker().getValue());
                 }
                 else if(GUI.getLeftPane().getSelectedTool() == "Eraser")
                 {
                     rectangle.setFill(Color.TRANSPARENT);
+                    rectangle.setStroke(rectangle.getFill());
                     colorMatrix.setMatrixElement(i, j, Color.TRANSPARENT);
                 }
                 else if(GUI.getLeftPane().getSelectedTool() == "Bucket")
@@ -106,11 +100,13 @@ public class Canvas {
                 if(GUI.getLeftPane().getSelectedTool() == "Pen")
                 {
                     rectangle.setFill(GUI.getLeftPane().getColorPickerClass().getColorPicker().getValue());
+                    rectangle.setStroke(rectangle.getFill());
                     colorMatrix.setMatrixElement(i, j, GUI.getLeftPane().getColorPickerClass().getColorPicker().getValue());
                 }
                 else if(GUI.getLeftPane().getSelectedTool() == "Eraser")
                 {
                     rectangle.setFill(Color.TRANSPARENT);
+                    rectangle.setStroke(rectangle.getFill());
                     colorMatrix.setMatrixElement(i ,j, Color.TRANSPARENT);
                 }
                 else if(GUI.getLeftPane().getSelectedTool() == "Color Replacer")
@@ -129,7 +125,7 @@ public class Canvas {
                 if(GUI.getLeftPane().getSelectedTool() == "Pen")
                     rectangle.setFill(GUI.getLeftPane().getColorPickerClass().getColorPicker().getValue());
                 else if(GUI.getLeftPane().getSelectedTool() == "Eraser")
-                    rectangle.setFill(Color.TRANSPARENT);
+                    rectangle.setFill(Color.WHITE);
                 else if(GUI.getLeftPane().getSelectedTool() == "Bucket")
                     rectangle.setFill(GUI.getLeftPane().getColorPickerClass().getColorPicker().getValue());
             }
@@ -147,6 +143,7 @@ public class Canvas {
     public void setRectangleFill(int i, int j, Color color)      //asta e ca sa setezi culoarea unui rectangle
     {
         rectanglesMatrix[i][j].setFill(color);
+        rectanglesMatrix[i][j].setStroke(color);
     }
 
     public ColorMatrix getColorMatrix()
@@ -159,10 +156,12 @@ public class Canvas {
         return rectanglesMatrix[i][j];
     }
 
-    public Rectangle getBackgroundRectangle(int i, int j)
+ /*   public Rectangle getBackgroundRectangle(int i, int j)
     {
         return backgroundRectanglesMatrix[i][j];
     }
+
+  */
 
     public int getTileWidth()
     {

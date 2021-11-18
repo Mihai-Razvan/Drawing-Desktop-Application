@@ -5,7 +5,7 @@ import javafx.scene.control.Menu;
 import javafx.scene.control.MenuItem;
 import javafx.stage.FileChooser;
 
-import javax.imageio.ImageIO;
+import javax.imageio.*;
 import java.io.File;
 import java.io.IOException;
 
@@ -44,6 +44,8 @@ public class FileMenu {
                 System.out.println("COULDN'T SAVE IMAGE");
             }
         }
+        else
+            System.out.println("SAVE LOCATION NOT SELECTED");
 
     }
 
@@ -57,4 +59,5 @@ public class FileMenu {
     {
         return menu;
     }
+
 }

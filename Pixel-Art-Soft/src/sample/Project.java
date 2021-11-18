@@ -1,18 +1,11 @@
 package sample;
 
-import javafx.animation.Animation;
-import javafx.animation.KeyFrame;
-import javafx.animation.KeyValue;
-import javafx.animation.Timeline;
-import javafx.application.Platform;
 import javafx.geometry.Insets;
-import javafx.scene.Group;
 import javafx.scene.control.Button;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.CornerRadii;
 import javafx.scene.paint.Color;
-import javafx.util.Duration;
 
 import java.util.ArrayList;
 
@@ -42,7 +35,6 @@ public class Project {
         button.setTextFill(Color.WHITE);
         button.setPrefWidth(80);
         button.setOnAction(event -> changeProject());
-        createAnimation();
     }
 
     public void setOpenedFrame(Frame openedFrame)
@@ -136,23 +128,21 @@ public class Project {
 
     public static void deleteOldCanvas(int i, int j)
     {
-        GUI.getCenterPane().getPane().getChildren().removeAll(GUI.getCenterPane().getOpenedProject().getOpenedFrame().getCanvas().getBackgroundRectangle(i, j),
-                GUI.getCenterPane().getOpenedProject().getOpenedFrame().getCanvas().getRectangle(i ,j));     //stergem canvasu proiectului vechi
+        GUI.getCenterPane().getPane().getChildren().removeAll(GUI.getCenterPane().getOpenedProject().getOpenedFrame().getCanvas().getRectangle(i ,j));     //stergem canvasu proiectului vechi
+
+      /*  GUI.getCenterPane().getPane().getChildren().removeAll(GUI.getCenterPane().getOpenedProject().getOpenedFrame().getCanvas().getBackgroundRectangle(i, j),
+                GUI.getCenterPane().getOpenedProject().getOpenedFrame().getCanvas().getRectangle(i ,j));
+
+       */
     }
 
     public static void addNewCanvas(int i, int j)     //adauga patratelele canvasului  pe rand
     {
-        GUI.getCenterPane().getPane().getChildren().addAll(GUI.getCenterPane().getOpenedProject().getOpenedFrame().getCanvas().getBackgroundRectangle(i ,j),
-                GUI.getCenterPane().getOpenedProject().getOpenedFrame().getCanvas().getRectangle(i, j));   //adaugam canvasu proiectului actual
-    }
+        GUI.getCenterPane().getPane().getChildren().addAll(GUI.getCenterPane().getOpenedProject().getOpenedFrame().getCanvas().getRectangle(i, j));   //adaugam canvasu proiectului actual
 
-    public void createAnimation()
-    {
-        Timeline timeline = new Timeline();
-        timeline.setCycleCount(2);
-        timeline.setAutoReverse(true);
-        timeline.getKeyFrames().add(new KeyFrame(Duration.millis(5000),
-                new KeyValue (button.translateXProperty(), 25)));
-        timeline.play();
+       /* GUI.getCenterPane().getPane().getChildren().addAll(GUI.getCenterPane().getOpenedProject().getOpenedFrame().getCanvas().getBackgroundRectangle(i ,j),
+                GUI.getCenterPane().getOpenedProject().getOpenedFrame().getCanvas().getRectangle(i, j))
+
+        */
     }
 }

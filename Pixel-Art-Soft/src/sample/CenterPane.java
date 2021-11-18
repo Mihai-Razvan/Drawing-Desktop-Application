@@ -4,9 +4,11 @@ import javafx.beans.value.ChangeListener;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.scene.control.Button;
+import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
+import javafx.scene.paint.ImagePattern;
 import javafx.scene.paint.Paint;
 import javafx.scene.shape.Line;
 import javafx.scene.shape.Rectangle;
@@ -20,6 +22,7 @@ public class CenterPane {
     ArrayList<Project> projectsArrayList;
     Project openedProject;        //proiectu deschis acum
     NewProjectWindow newProjectWindow;
+    Rectangle backgroundRectangle;
 
     CenterPane()
     {
@@ -33,6 +36,20 @@ public class CenterPane {
         pane.getChildren().add(newProjectWindow.getPane());
     }
 
+    private void instantiateBackroundRectangle()         //fct asta se face cand se face primu project sa nu fie backroundu inainte sa exite un proiect
+    {
+        Image noFillImage = new Image("no_fill.png");
+        double paneCenterX = pane.getPrefWidth() / 2;
+        double paneCenterY = pane.getPrefHeight() / 2;
+        double canvasSize = 640;
+        backgroundRectangle = new Rectangle(paneCenterX - canvasSize / 2, paneCenterY - canvasSize / 2, canvasSize, canvasSize);
+        backgroundRectangle.setStroke(Color.BLACK);
+        backgroundRectangle.setFill(new ImagePattern(noFillImage));
+        backgroundRectangle.setOpacity(0.5);
+        backgroundRectangle.toBack();
+        pane.getChildren().add(backgroundRectangle);
+    }
+
     public void createNewProject(String name, int tileWidth, int tileHeight)
     {
         Project project = new Project(name, tileWidth, tileHeight, pane.getPrefWidth(), pane.getPrefHeight());
@@ -40,6 +57,7 @@ public class CenterPane {
         if(projectsArrayList.size() == 0)   //asta e primu element din arraylist
         {
             project.getButton().setLayoutX(0);
+            instantiateBackroundRectangle();
         }
         else
         {
