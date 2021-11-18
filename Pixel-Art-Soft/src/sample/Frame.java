@@ -34,7 +34,7 @@ public class Frame {
             duplicateCanvas();
 
         addImageView();
-        composeImage();
+      //  composeImage();
     }
 
     public void addImageView()     //aici se intampla si schimbarea frameului atunci cand apesi pe imageViewul frameului pe care vrei sa l deschizi
