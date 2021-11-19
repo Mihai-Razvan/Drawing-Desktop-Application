@@ -10,28 +10,30 @@ import javafx.scene.paint.Color;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Rectangle;
 
+import java.security.PublicKey;
+
 public class Canvas {
 
     Rectangle[][] rectanglesMatrix;
     ColorMatrix colorMatrix;
     int tileWidth;
     int tileHeight;
+    double paneWidth;
+    double paneHeight;
     double paneCenterX;
     double paneCenterY;
     double squareSize;
     double canvasSize = 640;
-    int pixelsPerSquare;      //pt ffiecare patratel cati pixeli deseneaza
-    WritableImage writableImage;
 
-    Canvas(int tileWidth, int tileHeight, double paneWidth, double paneHeight, int pixelsPerSquare)
+    Canvas(int tileWidth, int tileHeight, double paneWidth, double paneHeight)
     {
         this.tileHeight = tileHeight;
         this.tileWidth = tileWidth;
-        this.pixelsPerSquare = pixelsPerSquare;
+        this.paneWidth = paneWidth;
+        this.paneHeight = paneHeight;
 
         rectanglesMatrix = new Rectangle[tileHeight][tileWidth];
         colorMatrix = new ColorMatrix(tileWidth, tileHeight);
-        writableImage = new WritableImage(pixelsPerSquare * tileWidth, pixelsPerSquare * tileHeight);
 
         paneCenterX = paneWidth / 2;
         paneCenterY = paneHeight / 2;
@@ -45,8 +47,9 @@ public class Canvas {
 
     private void instantiateRectangle(int i, int j)
     {
-        rectanglesMatrix[i][j] = new Rectangle((paneCenterX - canvasSize / 2) + i * squareSize,
-                (paneCenterY - canvasSize / 2) + j * squareSize, squareSize, squareSize);
+        rectanglesMatrix[i][j] = new Rectangle(squareSize, squareSize);
+        rectanglesMatrix[i][j].setLayoutX(paneCenterX - squareSize * (Double.valueOf(tileWidth) / 2) + j * squareSize);
+        rectanglesMatrix[i][j].setLayoutY(paneCenterY - squareSize * (Double.valueOf(tileHeight) / 2) + i * squareSize);
         final Rectangle rectangle = rectanglesMatrix[i][j];
         rectangle.setFill(Color.TRANSPARENT);
         rectangle.setStroke(rectangle.getFill());     // ca sa nu ramana linia aia libera intre triunghiuri punem strokeu de ac culoare cu triunghiu
@@ -83,7 +86,6 @@ public class Canvas {
                         GUI.getLeftPane().getColorReplacerTool().replaceColor(i, j);
                 }
 
-                GUI.getCenterPane().getOpenedProject().getOpenedFrame().composeImage();
             }
         });
 
@@ -115,7 +117,6 @@ public class Canvas {
                         GUI.getLeftPane().getColorReplacerTool().replaceColor(i ,j);
                 }
 
-                GUI.getCenterPane().getOpenedProject().getOpenedFrame().composeImage();
             }
         });
 
@@ -155,13 +156,6 @@ public class Canvas {
     {
         return rectanglesMatrix[i][j];
     }
-
- /*   public Rectangle getBackgroundRectangle(int i, int j)
-    {
-        return backgroundRectanglesMatrix[i][j];
-    }
-
-  */
 
     public int getTileWidth()
     {

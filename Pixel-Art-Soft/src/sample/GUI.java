@@ -21,7 +21,7 @@ public class GUI extends Application {
 
 
     @Override
-    public void start(Stage stage) throws Exception{
+    public void start(Stage stage) throws Exception {
 
         this.stage = stage;
         Screen_Resolution_Height = Screen.getPrimary().getVisualBounds().getHeight();

@@ -2,11 +2,15 @@ package sample;
 
 import javafx.geometry.Insets;
 import javafx.scene.control.Button;
+import javafx.scene.image.Image;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.CornerRadii;
 import javafx.scene.paint.Color;
+import javafx.scene.paint.ImagePattern;
+import javafx.scene.shape.Rectangle;
 
+import java.awt.*;
 import java.util.ArrayList;
 
 public class Project {
@@ -16,6 +20,8 @@ public class Project {
     int tileHeight;
     double paneWidth;
     double paneHeight;
+    int canvasSize = 640;
+    Rectangle backgroundRectangle;    //e acelasi pt toate frameurile
 
     ArrayList<Frame> frameArrayList;
     Frame openedFrame;     //frameu deschis acum
@@ -30,6 +36,8 @@ public class Project {
         this.tileHeight = tileHeight;
         this.paneWidth = paneWidth;
         this.paneHeight = paneHeight;
+        instantiateBackroundRectangle();
+
         button = new Button(projectName);
         button.setBackground(new Background(new BackgroundFill(Color.web("363636"), new CornerRadii(3), Insets.EMPTY)));
         button.setTextFill(Color.WHITE);
@@ -37,39 +45,20 @@ public class Project {
         button.setOnAction(event -> changeProject());
     }
 
-    public void setOpenedFrame(Frame openedFrame)
+    public void instantiateBackroundRectangle()         //fct asta se face cand se face primu project sa nu fie backroundu inainte sa exite un proiect
     {
-        this.openedFrame = openedFrame;
-    }
+        Image noFillImage = new Image("no_fill.png");
+        double paneCenterX = paneWidth / 2;
+        double paneCenterY = paneHeight / 2;
+        double squareSize = canvasSize / Integer.max(tileWidth, tileHeight);
+        backgroundRectangle = new javafx.scene.shape.Rectangle(squareSize * tileWidth, squareSize * tileHeight);
+        backgroundRectangle.setLayoutX(paneCenterX - squareSize * (Double.valueOf(tileWidth) / 2));
+        backgroundRectangle.setLayoutY(paneCenterY - squareSize * (Double.valueOf(tileHeight) / 2));
+        backgroundRectangle.setStroke(Color.BLACK);
+        backgroundRectangle.setFill(new ImagePattern(noFillImage));
+        backgroundRectangle.setOpacity(0.5);
+        backgroundRectangle.toBack();
 
-    public Button getButton()
-    {
-        return button;
-    }
-
-    public Frame getOpenedFrame()
-    {
-        return openedFrame;
-    }
-
-    public ArrayList<Frame> getFrameArrayList()
-    {
-        return frameArrayList;
-    }
-
-    public int getFramesNumber()
-    {
-        return getFrameArrayList().size();
-    }
-
-    public int getTileWidth()
-    {
-        return tileWidth;
-    }
-
-    public int getTileHeight()
-    {
-        return tileHeight;
     }
 
     private void changeProject()               //apesi pe buton se schimba proiectu la care eesti in asta
@@ -85,14 +74,15 @@ public class Project {
 
         for(int i = 0; i < framesNumber; i++)
             frameArrayList.get(i).addImageView();
-        
 
+        GUI.getCenterPane().getPane().getChildren().remove(GUI.getCenterPane().getOpenedProject().getBackgroundRectangle());
         for(int i = 0; i < GUI.getCenterPane().getOpenedProject().getTileHeight(); i ++)
             for(int j = 0; j < GUI.getCenterPane().getOpenedProject().getTileWidth(); j++)
                 deleteOldCanvas(i, j);
 
         GUI.getCenterPane().setOpenedProject(this);
 
+        GUI.getCenterPane().getPane().getChildren().add(backgroundRectangle);
         for(int i = 0; i < tileHeight; i++)
             for(int j = 0; j < tileWidth; j++)
                 addNewCanvas(i, j);
@@ -144,5 +134,45 @@ public class Project {
                 GUI.getCenterPane().getOpenedProject().getOpenedFrame().getCanvas().getRectangle(i, j))
 
         */
+    }
+
+    public void setOpenedFrame(Frame openedFrame)
+    {
+        this.openedFrame = openedFrame;
+    }
+
+    public Button getButton()
+    {
+        return button;
+    }
+
+    public Frame getOpenedFrame()
+    {
+        return openedFrame;
+    }
+
+    public ArrayList<Frame> getFrameArrayList()
+    {
+        return frameArrayList;
+    }
+
+    public int getFramesNumber()
+    {
+        return getFrameArrayList().size();
+    }
+
+    public Rectangle getBackgroundRectangle()
+    {
+        return backgroundRectangle;
+    }
+
+    public int getTileWidth()
+    {
+        return tileWidth;
+    }
+
+    public int getTileHeight()
+    {
+        return tileHeight;
     }
 }

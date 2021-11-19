@@ -22,7 +22,6 @@ public class CenterPane {
     ArrayList<Project> projectsArrayList;
     Project openedProject;        //proiectu deschis acum
     NewProjectWindow newProjectWindow;
-    Rectangle backgroundRectangle;
 
     CenterPane()
     {
@@ -36,20 +35,6 @@ public class CenterPane {
         pane.getChildren().add(newProjectWindow.getPane());
     }
 
-    private void instantiateBackroundRectangle()         //fct asta se face cand se face primu project sa nu fie backroundu inainte sa exite un proiect
-    {
-        Image noFillImage = new Image("no_fill.png");
-        double paneCenterX = pane.getPrefWidth() / 2;
-        double paneCenterY = pane.getPrefHeight() / 2;
-        double canvasSize = 640;
-        backgroundRectangle = new Rectangle(paneCenterX - canvasSize / 2, paneCenterY - canvasSize / 2, canvasSize, canvasSize);
-        backgroundRectangle.setStroke(Color.BLACK);
-        backgroundRectangle.setFill(new ImagePattern(noFillImage));
-        backgroundRectangle.setOpacity(0.5);
-        backgroundRectangle.toBack();
-        pane.getChildren().add(backgroundRectangle);
-    }
-
     public void createNewProject(String name, int tileWidth, int tileHeight)
     {
         Project project = new Project(name, tileWidth, tileHeight, pane.getPrefWidth(), pane.getPrefHeight());
@@ -57,13 +42,13 @@ public class CenterPane {
         if(projectsArrayList.size() == 0)   //asta e primu element din arraylist
         {
             project.getButton().setLayoutX(0);
-            instantiateBackroundRectangle();
         }
         else
         {
             project.getButton().setLayoutX(projectsArrayList.get(projectsArrayList.size() - 1).getButton().getLayoutX()
                     + projectsArrayList.get(projectsArrayList.size() - 1).getButton().getPrefWidth() + 2);
 
+            pane.getChildren().remove(openedProject.getBackgroundRectangle());
             for(int i = 0; i < openedProject.getTileHeight(); i ++)
                 for(int j = 0; j < openedProject.getTileWidth(); j++)
                     Project.deleteOldCanvas(i, j);       //functia asta e statica
@@ -83,6 +68,7 @@ public class CenterPane {
         pane.getChildren().add(project.getButton());
         openedProject = project;
 
+        pane.getChildren().add(openedProject.getBackgroundRectangle());
         for(int i = 0; i < tileHeight; i++)
             for(int j = 0; j < tileWidth; j++)
                 Project.addNewCanvas(i, j);

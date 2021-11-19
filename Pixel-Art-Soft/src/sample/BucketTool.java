@@ -95,6 +95,8 @@ public class BucketTool {
                 bucketToolFill(i, j + 1, colorToCover, coveringColor);
             if(j > 0)
                 bucketToolFill(i, j - 1, colorToCover, coveringColor);
+
+            //nush dc imi da eroarea stack traceu ala cu StackOverFlow error dar si cand imi da tot merge bn
         }
     }
 

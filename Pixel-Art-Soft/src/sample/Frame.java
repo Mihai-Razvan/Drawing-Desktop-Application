@@ -8,6 +8,11 @@ import javafx.scene.image.WritableImage;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
+import javafx.scene.shape.Rectangle;
+
+import javax.swing.plaf.basic.BasicBorders;
+import java.awt.*;
+import java.security.cert.X509Certificate;
 
 public class Frame {
 
@@ -17,11 +22,12 @@ public class Frame {
     int frameNumber;    //il indexam de la 0
     int tileHeight;
     int tileWidth;
-    int pixelsPerSquare = 16;
+    int pixelsPerSquare;
 
     Frame(int tileWidth, int tileHeight, double paneWidth, double paneHeight, int frameNumber)         //imagePosition e unde se pune imaginea jos
     {
-        canvas = new Canvas(tileWidth, tileHeight, paneWidth, paneHeight, pixelsPerSquare);
+        canvas = new Canvas(tileWidth, tileHeight, paneWidth, paneHeight);
+        pixelsPerSquare = 190 / Integer.max(tileHeight, tileWidth);
         writableImage = new WritableImage(pixelsPerSquare * tileWidth, pixelsPerSquare * tileHeight);
 
         this.tileHeight = tileHeight;
@@ -34,13 +40,21 @@ public class Frame {
             duplicateCanvas();
 
         addImageView();
-      //  composeImage();
+        composeImage();
     }
 
     public void addImageView()     //aici se intampla si schimbarea frameului atunci cand apesi pe imageViewul frameului pe care vrei sa l deschizi
     {
-        imageView.setLayoutY(40);
-        double xPos = 100 + frameNumber * 150;
+        double YPos = GUI.getBottomPane().getPane().getPrefHeight() / 2 - (tileHeight * pixelsPerSquare) / 2;
+        imageView.setLayoutY(YPos);
+        double xPos;
+        if(frameNumber == 0)
+            xPos = 100;
+        else
+        {
+            int lastFrameNumber = GUI.getCenterPane().getOpenedProject().getFramesNumber() - 1;
+            xPos = GUI.getCenterPane().getOpenedProject().getFrameArrayList().get(lastFrameNumber).getImageView().getLayoutX() + writableImage.getWidth() + 50;
+        }
         imageView.setLayoutX(xPos);
 
         imageView.setOnMouseClicked(new EventHandler<MouseEvent>() {
@@ -95,15 +109,18 @@ public class Frame {
 
         for(int i = 0; i < tileHeight; i ++)
             for(int j = 0; j < tileWidth; j ++)
-            {
-                Color color;
-                if(canvas.getColorMatrix().getMatrixElement(i ,j) == Color.TRANSPARENT)
-                    color = Color.WHITE;
-                else
-                    color = canvas.getColorMatrix().getMatrixElement(i, j);
+                for (int k = 0; k < pixelsPerSquare; k++)
+                    for (int t = 0; t < pixelsPerSquare; t++)
+                    {
+                        Color color;
+                        if (canvas.getColorMatrix().getMatrixElement(i, j) == Color.TRANSPARENT)
+                            color = Color.WHITE;
+                        else
+                            color = canvas.getColorMatrix().getMatrixElement(i, j);
 
-                pixelWriter.setColor(i, j, color);
-            }
+                        pixelWriter.setColor( j * pixelsPerSquare + t, i * pixelsPerSquare + k, color);
+                    }
+
 
         imageView.setImage(getImage());
     }

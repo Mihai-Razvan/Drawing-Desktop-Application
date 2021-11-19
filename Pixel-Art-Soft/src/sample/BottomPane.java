@@ -16,6 +16,7 @@ public class BottomPane {
 
     Pane pane;
     Button addFrameButton;
+    Button refreshImageButton;      //img isi face refresh cand apesi butonu nu mereu cand se modifica un rectangle
 
     BottomPane()
     {
@@ -26,6 +27,7 @@ public class BottomPane {
                 BorderStrokeStyle.NONE, BorderStrokeStyle.NONE, BorderStrokeStyle.NONE, CornerRadii.EMPTY, new BorderWidths(2), Insets.EMPTY)));
 
         setAddFrameButton();
+        setRefreshImageButton();
     }
 
     private void setAddFrameButton()
@@ -34,10 +36,22 @@ public class BottomPane {
         addFrameButton.setBackground(new Background(new BackgroundFill(Color.web("363636"), new CornerRadii(3), Insets.EMPTY)));
         addFrameButton.setTextFill(Color.WHITE);
         addFrameButton.setLayoutX(20);
-        addFrameButton.setLayoutY(100);
+        addFrameButton.setLayoutY(50);
         addFrameButton.setOnAction(event -> GUI.getCenterPane().getOpenedProject().addNewFrame());
 
         pane.getChildren().add(addFrameButton);
+    }
+
+    private void setRefreshImageButton()
+    {
+        refreshImageButton = new Button("R");
+        refreshImageButton.setBackground(new Background(new BackgroundFill(Color.web("363636"), new CornerRadii(3), Insets.EMPTY)));
+        refreshImageButton.setTextFill(Color.WHITE);
+        refreshImageButton.setLayoutX(20);
+        refreshImageButton.setLayoutY(150);
+        refreshImageButton.setOnAction(event -> GUI.getCenterPane().getOpenedProject().getOpenedFrame().composeImage());
+
+        pane.getChildren().add(refreshImageButton);
     }
 
     public Pane getPane()
