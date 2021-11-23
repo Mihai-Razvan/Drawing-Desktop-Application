@@ -9,11 +9,15 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 
+import java.security.Guard;
+
 public class RectangleTool {
 
     Image image;
     ImageView imageView;
     Button button;
+    int initialRectangleI;
+    int initialRectangleJ;
 
     RectangleTool()
     {
@@ -67,6 +71,57 @@ public class RectangleTool {
         }
     }
 
+    public void setInitialCoordinates(int i, int j) //cand da click pe un rectangle ala e ractangleu de la care porneste dreptungiu si i se seteaza coord
+    {
+        initialRectangleI = i;
+        initialRectangleJ = j;
+    }
+
+    public void drawSketchRectangle(int finalRectangleI, int finalRectangleJ, Color color)  //deseneaza dreptunghiu cand faci drag da nu ala final
+    {
+        for(int i =  Math.min(initialRectangleI, finalRectangleI); i <=  Math.max(initialRectangleI, finalRectangleI); i++)
+        {
+            GUI.getCenterPane().getOpenedCanvas().setRectangleFill(i, initialRectangleJ, color);
+            GUI.getCenterPane().getOpenedCanvas().setRectangleFill(i, finalRectangleJ, color);
+        }
+
+        for(int j = Math.min(initialRectangleJ, finalRectangleJ) + 1; j < Math.max(initialRectangleJ, finalRectangleJ); j++)
+        {
+            GUI.getCenterPane().getOpenedCanvas().setRectangleFill(initialRectangleI, j, color);
+            GUI.getCenterPane().getOpenedCanvas().setRectangleFill(finalRectangleI, j, color);
+        }
+    }
+
+    public void deleteSketchRectangle(int finalRectangleI, int finalRectangleJ)  //sterge rectangleu desenat daca nu ridici mouse sa ramana final
+    {
+        int ipornire = Math.max(Math.min(initialRectangleI, finalRectangleI) - 1, 0);
+        int jpornire = Math.max(Math.min(initialRectangleJ, finalRectangleJ) - 1, 0);
+
+        for(int i = ipornire ; i < GUI.getCenterPane().getOpenedCanvas().getTileHeight() && i <= Math.max(initialRectangleI, finalRectangleI) + 1; i++)
+            for(int j = jpornire ; j < GUI.getCenterPane().getOpenedCanvas().getTileWidth() && j <= Math.max(initialRectangleJ, finalRectangleJ) + 1; j++)
+                GUI.getCenterPane().getOpenedCanvas().setRectangleFill(i, j, GUI.getCenterPane().getOpenedCanvas().getColorMatrix().getMatrixElement(i, j));
+    }
+
+    public void drawFinalRectangle(int finalRectangleI, int finalRectangleJ, Color color)  //deseneaza dreptunghiu final
+    {
+        for(int i =  Math.min(initialRectangleI, finalRectangleI); i <=  Math.max(initialRectangleI, finalRectangleI); i++)
+        {
+            GUI.getCenterPane().getOpenedCanvas().setRectangleFill(i, initialRectangleJ, color);
+            GUI.getCenterPane().getOpenedCanvas().getColorMatrix().setMatrixElement(i, initialRectangleJ, color);
+
+            GUI.getCenterPane().getOpenedCanvas().setRectangleFill(i, finalRectangleJ, color);
+            GUI.getCenterPane().getOpenedCanvas().getColorMatrix().setMatrixElement(i, finalRectangleJ, color);
+        }
+
+        for(int j = Math.min(initialRectangleJ, finalRectangleJ) + 1; j < Math.max(initialRectangleJ, finalRectangleJ); j++)
+        {
+            GUI.getCenterPane().getOpenedCanvas().setRectangleFill(initialRectangleI, j, color);
+            GUI.getCenterPane().getOpenedCanvas().getColorMatrix().setMatrixElement(initialRectangleI, j, color);
+
+            GUI.getCenterPane().getOpenedCanvas().setRectangleFill(finalRectangleI, j, color);
+            GUI.getCenterPane().getOpenedCanvas().getColorMatrix().setMatrixElement(finalRectangleI, j, color);
+        }
+    }
 
     public void activateTool()
     {

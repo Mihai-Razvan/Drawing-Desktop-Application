@@ -4,6 +4,7 @@ import javafx.event.EventHandler;
 import javafx.scene.image.Image;
 import javafx.scene.image.PixelWriter;
 import javafx.scene.image.WritableImage;
+import javafx.scene.input.DragEvent;
 import javafx.scene.input.MouseDragEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
@@ -85,7 +86,12 @@ public class Canvas {
                     else if(event.isPrimaryButtonDown())
                         GUI.getLeftPane().getColorReplacerTool().replaceColor(i, j);
                 }
-
+                else if(GUI.getLeftPane().getSelectedTool() == ("Rectangle Tool"))
+                {
+                    rectangle.setFill(GUI.getLeftPane().getColorPickerClass().getColorPicker().getValue());
+                    rectangle.setStroke(rectangle.getFill());
+                    colorMatrix.setMatrixElement(i, j, GUI.getLeftPane().getColorPickerClass().getColorPicker().getValue());
+                }
             }
         });
 
@@ -93,6 +99,9 @@ public class Canvas {
             @Override
             public void handle(MouseEvent mouseEvent) {
                 rectangle.startFullDrag();
+                if(GUI.getLeftPane().getSelectedTool() == "Rectangle Tool")
+                    GUI.getLeftPane().getRectangleTool().setInitialCoordinates(i, j);
+
             }
         });
 
@@ -116,7 +125,19 @@ public class Canvas {
                     if(event.isPrimaryButtonDown())
                         GUI.getLeftPane().getColorReplacerTool().replaceColor(i ,j);
                 }
+                else if(GUI.getLeftPane().getSelectedTool() == "Rectangle Tool")
+                {
+                    GUI.getLeftPane().getRectangleTool().deleteSketchRectangle(i, j);
+                    GUI.getLeftPane().getRectangleTool().drawSketchRectangle(i, j, GUI.getLeftPane().getColorPickerClass().getColorPicker().getValue());
+                }
+            }
+        });
 
+        rectangle.setOnMouseDragReleased(new EventHandler<MouseDragEvent>() {
+            @Override
+            public void handle(MouseDragEvent mouseDragEvent) {
+                if(GUI.getLeftPane().getSelectedTool() == "Rectangle Tool")
+                    GUI.getLeftPane().getRectangleTool().drawFinalRectangle(i, j, GUI.getLeftPane().getColorPickerClass().getColorPicker().getValue());
             }
         });
 
@@ -134,6 +155,8 @@ public class Canvas {
                     if(GUI.getLeftPane().getColorReplacerTool().getColorToReplace() == rectangle.getFill())
                         rectangle.setFill(GUI.getLeftPane().getColorReplacerTool().getReplacementColor());
                 }
+                else if(GUI.getLeftPane().getSelectedTool() == "Rectangle Tool")
+                    rectangle.setFill(GUI.getLeftPane().getColorPickerClass().getColorPicker().getValue());
             }
         });
 
