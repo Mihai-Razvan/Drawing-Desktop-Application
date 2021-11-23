@@ -17,7 +17,7 @@ import javafx.scene.text.Font;
 
 public class PenToolOptions {
                                             //aia din toppane cu detalii si optiuni pt pen
-    ImageView penImageView;
+    ImageView imageView;
     Group group;
     Label opacityLabel;
     TextField opacityTF;
@@ -30,7 +30,7 @@ public class PenToolOptions {
         group = new Group();
         setVisible(false);
         group.setLayoutY(25);
-        group.getChildren().addAll(penImageView, opacityTF, opacityLabel);
+        group.getChildren().addAll(imageView, opacityTF, opacityLabel);
     }
 
     private void instantiateOpacity()
@@ -65,19 +65,22 @@ public class PenToolOptions {
     private void instantiatePenImageView()
     {
         Image image = new Image("icon_pen.png");
-        penImageView = new ImageView(image);
-        penImageView.setFitHeight(15);
-        penImageView.setFitWidth(15);
-        penImageView.setLayoutX(15);
-        penImageView.setLayoutY(16);
+        imageView = new ImageView(image);
+        imageView.setFitHeight(15);
+        imageView.setFitWidth(15);
+        imageView.setLayoutX(15);
+        imageView.setLayoutY(16);
     }
-
 
     public void setVisible(boolean b)
     {
         group.setVisible(b);
     }
 
+    public void setOpacityTF(int opacity)
+    {
+        opacityTF.setText(Integer.toString(opacity));
+    }
 
     public Group getGroup()
     {

@@ -6,7 +6,7 @@ import javafx.scene.image.ImageView;
 
 public class EraserToolOptions {
 
-    ImageView eraserImageView;
+    ImageView imageView;
     Group group;
 
 
@@ -17,18 +17,18 @@ public class EraserToolOptions {
         group = new Group();
         group.setLayoutY(25);
         setVisible(false);
-        group.getChildren().addAll(eraserImageView);
+        group.getChildren().addAll(imageView);
     }
 
 
     private void instantiateEraserImageView()
     {
         Image image = new Image("icon_eraser.png");
-        eraserImageView = new ImageView(image);
-        eraserImageView.setFitHeight(20);
-        eraserImageView.setFitWidth(20);
-        eraserImageView.setLayoutX(15);
-        eraserImageView.setLayoutY(16);
+        imageView = new ImageView(image);
+        imageView.setFitHeight(20);
+        imageView.setFitWidth(20);
+        imageView.setLayoutX(15);
+        imageView.setLayoutY(16);
     }
 
     public void setVisible(boolean b)

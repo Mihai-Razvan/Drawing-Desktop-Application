@@ -13,7 +13,7 @@ import javafx.scene.text.Font;
 
 public class ColorReplacerToolOptions {
 
-    ImageView colorReplacerImageView;
+    ImageView imageView;
     Group group;
     Rectangle replacementColorRectangle;
     Rectangle replacementColorBackground;   //ala cu img no fill
@@ -29,7 +29,7 @@ public class ColorReplacerToolOptions {
         group = new Group();
         group.setLayoutY(25);
         setVisible(false);
-        group.getChildren().addAll(colorReplacerImageView, replacementColorBackground, colorToReplaceBackground, replacementColorRectangle,
+        group.getChildren().addAll(imageView, replacementColorBackground, colorToReplaceBackground, replacementColorRectangle,
                 colorToReplaceRectangle, replacingLabel);
     }
 
@@ -37,11 +37,11 @@ public class ColorReplacerToolOptions {
     private void instantiateColorReplacerImageView()
     {
         Image image = new Image("icon_color_replacer.png");
-        colorReplacerImageView = new ImageView(image);
-        colorReplacerImageView.setFitHeight(20);
-        colorReplacerImageView.setFitWidth(20);
-        colorReplacerImageView.setLayoutX(15);
-        colorReplacerImageView.setLayoutY(16);
+        imageView = new ImageView(image);
+        imageView.setFitHeight(20);
+        imageView.setFitWidth(20);
+        imageView.setLayoutX(15);
+        imageView.setLayoutY(16);
     }
 
     private void instantiateColorReplacement()      //replacementColorRectangle, replacingLabel, colorToReplaceRectangle si backgroundeurile cu nofill

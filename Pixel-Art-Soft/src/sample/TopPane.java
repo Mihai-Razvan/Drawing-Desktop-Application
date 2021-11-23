@@ -12,6 +12,7 @@ public class TopPane {
     EraserToolOptions eraserToolOptions;
     BucketToolOptions bucketToolOptions;
     ColorReplacerToolOptions colorReplacerToolOptions;
+    RectangleToolOptions rectangleToolOptions;
 
     TopPane()
     {
@@ -26,9 +27,10 @@ public class TopPane {
         eraserToolOptions = new EraserToolOptions();
         bucketToolOptions = new BucketToolOptions();
         colorReplacerToolOptions = new ColorReplacerToolOptions();
+        rectangleToolOptions = new RectangleToolOptions();
 
         pane.getChildren().addAll(topMenu.getMenuBar(), penToolOptions.getGroup(), eraserToolOptions.getGroup(), bucketToolOptions.getGroup(),
-                colorReplacerToolOptions.getGroup());
+                colorReplacerToolOptions.getGroup(), rectangleToolOptions.getGroup());
     }
 
     public Pane getPane()
@@ -54,5 +56,10 @@ public class TopPane {
     public ColorReplacerToolOptions getColorReplacerToolOptions()
     {
         return colorReplacerToolOptions;
+    }
+
+    public RectangleToolOptions getRectangleToolOptions()
+    {
+        return rectangleToolOptions;
     }
 }

@@ -16,7 +16,7 @@ import javafx.scene.text.Font;
 
 public class BucketToolOptions {
 
-    ImageView bucketImageView;
+    ImageView imageView;
     Group group;
     Label opacityLabel;
     TextField opacityTF;
@@ -30,18 +30,18 @@ public class BucketToolOptions {
         group = new Group();
         group.setLayoutY(25);
         setVisible(false);
-        group.getChildren().addAll(bucketImageView, opacityTF, opacityLabel);
+        group.getChildren().addAll(imageView, opacityTF, opacityLabel);
     }
 
 
     private void instantiateBucketImageView()
     {
         Image image = new Image("icon_bucket.png");
-        bucketImageView = new ImageView(image);
-        bucketImageView.setFitHeight(20);
-        bucketImageView.setFitWidth(20);
-        bucketImageView.setLayoutX(15);
-        bucketImageView.setLayoutY(16);
+        imageView = new ImageView(image);
+        imageView.setFitHeight(20);
+        imageView.setFitWidth(20);
+        imageView.setLayoutX(15);
+        imageView.setLayoutY(16);
     }
 
     private void instantiateOpacity() {

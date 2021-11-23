@@ -21,8 +21,20 @@ public class ColorPickerClass {
         colorPicker.setScaleY(2.3);
         colorPicker.setLayoutX(33);
         colorPicker.setLayoutY(37);
+
+        colorChangeListener();
     }
 
+    public void colorChangeListener()
+    {
+        colorPicker.valueProperty().addListener((o, oldColor, newColor) -> {
+            if(oldColor.getRed() != newColor.getRed() || oldColor.getGreen() != newColor.getGreen() ||oldColor.getBlue() != newColor.getBlue()) //verf daca ai schimbat culoare si nu doar opacitatea
+            {
+                GUI.getTopPane().getPenToolOptions().setOpacityTF(100);
+                GUI.getTopPane().getRectangleToolOptions().setOpacityTF(100);
+            }
+        });
+    }
 
     public void setOpacity(double opacity)
     {

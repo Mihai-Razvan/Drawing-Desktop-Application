@@ -175,6 +175,13 @@ public class Canvas {
         rectanglesMatrix[i][j].setStroke(color);
     }
 
+    public void clearCanvas()  //fct folosita in bottompane->clearcanvasbutton
+    {
+        for(int i = 0; i < tileHeight; i++)
+            for(int j = 0; j < tileWidth; j++)
+                setRectangleFill(i, j, colorMatrix.getMatrixElement(i, j));
+    }
+
     public ColorMatrix getColorMatrix()
     {
         return colorMatrix;
