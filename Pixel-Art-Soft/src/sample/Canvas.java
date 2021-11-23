@@ -129,6 +129,11 @@ public class Canvas {
                     rectangle.setFill(Color.WHITE);
                 else if(GUI.getLeftPane().getSelectedTool() == "Bucket")
                     rectangle.setFill(GUI.getLeftPane().getColorPickerClass().getColorPicker().getValue());
+                else if(GUI.getLeftPane().selectedTool == "Color Replacer")
+                {
+                    if(GUI.getLeftPane().getColorReplacerTool().getColorToReplace() == rectangle.getFill())
+                        rectangle.setFill(GUI.getLeftPane().getColorReplacerTool().getReplacementColor());
+                }
             }
         });
 

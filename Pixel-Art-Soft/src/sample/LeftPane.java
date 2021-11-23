@@ -20,6 +20,7 @@ public class LeftPane {
     EraserTool eraserTool;
     BucketTool bucketTool;
     ColorReplacerTool colorReplacerTool;
+    RectangleTool rectangleTool;
 
     LeftPane()
     {
@@ -35,9 +36,11 @@ public class LeftPane {
         eraserTool = new EraserTool();
         bucketTool = new BucketTool();
         colorReplacerTool = new ColorReplacerTool();
+        rectangleTool = new RectangleTool();
 
         pane.getChildren().addAll(colorPickerClass.getColorPicker(), penTool.getButton(), penTool.getImageView(), eraserTool.getButton(), eraserTool.getImageView(),
-                bucketTool.getButton(), bucketTool.getImageView(), colorReplacerTool.getButton(), colorReplacerTool.getImageView());
+                bucketTool.getButton(), bucketTool.getImageView(), colorReplacerTool.getButton(), colorReplacerTool.getImageView(), rectangleTool.getButton(),
+                rectangleTool.getImageView());
     }
 
     public void instantiateSelectedColorRectangle() {
@@ -54,24 +57,35 @@ public class LeftPane {
             eraserTool.deactivateTool();
             bucketTool.deactivateTool();
             colorReplacerTool.deactivateTool();
+            rectangleTool.deactivateTool();
         }
         else if(toolName == "Eraser")
         {
             penTool.deactivateTool();
             bucketTool.deactivateTool();
             colorReplacerTool.deactivateTool();
+            rectangleTool.deactivateTool();
         }
         else if(toolName == "Bucket")
         {
             penTool.deactivateTool();
             eraserTool.deactivateTool();
             colorReplacerTool.deactivateTool();
+            rectangleTool.deactivateTool();
         }
         else if(toolName == "Color Replacer")
         {
             penTool.deactivateTool();
             eraserTool.deactivateTool();
             bucketTool.deactivateTool();
+            rectangleTool.deactivateTool();
+        }
+        else if(toolName == "Rectangle Tool")
+        {
+            penTool.deactivateTool();
+            eraserTool.deactivateTool();
+            bucketTool.deactivateTool();
+            colorReplacerTool.deactivateTool();
         }
     }
 
@@ -94,6 +108,10 @@ public class LeftPane {
 
     public BucketTool getBucketTool() {
         return bucketTool;
+    }
+
+    public RectangleTool getRectangleTool() {
+        return rectangleTool;
     }
 
     public ColorReplacerTool getColorReplacerTool() {
