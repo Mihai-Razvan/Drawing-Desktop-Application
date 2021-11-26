@@ -4,6 +4,7 @@ module Pixel.Art.Soft {
     requires javafx.fxml;
     requires java.desktop;
     requires javafx.swing;
+    requires javafx.graphics;
 
     opens sample;
 }
